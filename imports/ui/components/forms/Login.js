@@ -18,7 +18,7 @@ const Login = (props) => {
         event.preventDefault()
         Meteor.loginWithPassword(state.email, state.password, error => {
             if (error) {
-                console.log(error.reason)
+                props.errorAlert(error.reason)
             } else {
                 props.history.push('/')
             }

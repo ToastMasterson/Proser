@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Accounts } from 'meteor/accounts-base'
+
 import Container from 'react-bootstrap/Container'
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
 import Nav from 'react-bootstrap/Nav'
 import Signup from './forms/Signup'
 import Login from './forms/Login'
@@ -10,17 +10,37 @@ import Login from './forms/Login'
 const Landing = () => {
 
     const [option, setOption] = useState(true)
+    const [error, setError] = useState('')
 
     const handleSwitch = () => {
         setOption(!option)
     }
 
+    const errorAlert = (error) => {
+        setError(error)
+    }
+
+    const handleClose = () => {
+        setError('')
+    }
+
     const checkOption = () => {
         if (!option) {
-            return <Signup />
+            return <Signup errorAlert={errorAlert} />
         }
 
-        return <Login />
+        return <Login errorAlert={errorAlert} />
+    }
+
+    const checkError = () => {
+        if (error !== '') {
+            return (
+                <Alert variant="danger" onClose={handleClose} dismissible>
+                    <Alert.Heading>Whoops!</Alert.Heading>
+                    <p>{error}</p>
+                </Alert>
+            )
+        }
     }
 
     return (
@@ -38,6 +58,9 @@ const Landing = () => {
                     </Nav.Item>
                 </Nav>
                 {checkOption()}
+            </Container>
+            <Container className="alert">
+                {checkError()}
             </Container>
         </Container>
     )

@@ -8,13 +8,15 @@ import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-const Signup = () => {
+const Signup = (props) => {
     const [state, setState] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        error: '',
+        show: false
     })
 
     const handleChange = () => {
@@ -30,7 +32,7 @@ const Signup = () => {
             lastName: state.lastName
         }, error => {
             if (error) {
-                console.log(error.reason)
+                props.errorAlert(error.reason)
             } else {
                 props.history.push('/')
             }
