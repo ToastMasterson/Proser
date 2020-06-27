@@ -5,6 +5,7 @@ import './stylesheets/app.css'
 
 import Rhymer from './components/forms/Rhymer'
 import Editor from './components/Editor';
+import Adjectives from './components/forms/Adjectives'
 import Toolbar from './components/Toolbar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -25,6 +26,17 @@ const App = () => {
     setState({toolType: ''})
   }
 
+  const checkTool = () => {
+    switch (state.toolType) {
+      case 'rhyme':
+        return <Rhymer closeTool={closeTool} />
+      case 'adj':
+        return <Adjectives closeTool={closeTool} />
+      default:
+        break;
+    }
+  }
+
   return (
     <div id="App">
       <Container fluid>
@@ -34,9 +46,7 @@ const App = () => {
             <Sidebar />
           </Col>
           <Col>
-            {state.toolType === 'rhyme'
-              ? <Rhymer closeTool={closeTool} />
-              : null}
+            {checkTool()}
             <Editor />
           </Col>
         </Row>

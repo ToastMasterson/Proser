@@ -28,7 +28,7 @@ const Rhymer = ({closeTool}) => {
 
     const handleSubmit = async () => {
         event.preventDefault()
-        let results = await (Datamuse({...state}))
+        let results = await (Datamuse({...state}, 'rhyme'))
         setState({ ...state, results })
     }
 
