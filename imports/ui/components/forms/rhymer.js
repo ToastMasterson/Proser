@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 
-import { Datamuse } from '../../../helpers/datamuse'
+import { DMuse } from '../../../helpers/dmuse'
 
 const Rhymer = ({closeTool}) => {
     const [state, setState] = useState({
@@ -28,7 +28,7 @@ const Rhymer = ({closeTool}) => {
 
     const handleSubmit = async () => {
         event.preventDefault()
-        let results = await (Datamuse({...state}, 'rhyme'))
+        let results = await (DMuse({...state}, 'rhyme'))
         setState({ ...state, results })
     }
 
