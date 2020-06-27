@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Accounts } from 'meteor/accounts-base'
 
+import { withRouter } from 'react-router'
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Row from 'react-bootstrap/Row'
@@ -30,7 +32,7 @@ const Signup = () => {
             if (error) {
                 console.log(error.reason)
             } else {
-                //go home
+                props.history.push('/')
             }
         })
     }
@@ -79,4 +81,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default withRouter(Signup)

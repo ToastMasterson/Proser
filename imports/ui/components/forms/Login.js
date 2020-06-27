@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { Meteor } from 'meteor/meteor'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { withRouter } from 'react-router'
 
-const Login = () => {
+const Login = (props) => {
     const [state, setState] = useState({
         email: '',
         password: ''
@@ -19,7 +20,7 @@ const Login = () => {
             if (error) {
                 console.log(error.reason)
             } else {
-                //go home
+                props.history.push('/')
             }
         })
     }
@@ -44,4 +45,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default withRouter(Login)
