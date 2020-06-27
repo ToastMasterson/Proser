@@ -9,7 +9,5 @@ export const Datamuse = async (payload) => {
         .then(res => res.json())
         .catch(error => console.log(error))
 
-    console.log(results)
-
     return results
 }
