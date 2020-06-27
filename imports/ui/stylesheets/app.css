@@ -1,3 +1,12 @@
 #App {
     height: 100vh;
 }
+
+.login {
+    padding: 5%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 20px;
+    box-shadow: 6px 9px 16px;
+    max-width: 700px;
+}

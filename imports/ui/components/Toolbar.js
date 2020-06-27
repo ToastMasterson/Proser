@@ -1,4 +1,6 @@
 import React from 'react'
+
+import AccountsUIWrapper from '../AccountsUIWrapper'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 
@@ -19,6 +21,7 @@ const Toolbar = ({handleTools}) => {
                 <NavDropdown.Item onClick={() => handleTools('finder')}>Word Finder</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => handleTools('syn')}>Synonyms/Antonyms</NavDropdown.Item>
             </NavDropdown>
+            <AccountsUIWrapper />
         </Navbar>
     )
 }

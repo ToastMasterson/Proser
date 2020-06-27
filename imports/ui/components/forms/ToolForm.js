@@ -69,7 +69,9 @@ const ToolForm = ({closeTool, tool}) => {
                 <Form.Group as={Row} controlId="submit">
                     <Form.Label column sm={2}>Results</Form.Label>
                     <Col sm={10}>
-                        <Form.Control name="results" as="textarea" readOnly value={state.results.map(word => ' ' + word.word)} />
+                        <Form.Control name="results" as="textarea" readOnly 
+                            value={state.results.length > 1 
+                                ? 'No results found, try something else!' : state.results.map(word => ' ' + word.word)} />
                     </Col>
                 </Form.Group>
             </Form>
