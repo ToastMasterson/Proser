@@ -11,6 +11,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Sidebar from './components/Sidebar';
+import WordFinder from './components/forms/WordFinder';
+import Synonyms from './components/forms/Synonyms';
 
 const App = () => {
 
@@ -32,6 +34,10 @@ const App = () => {
         return <Rhymer closeTool={closeTool} />
       case 'adj':
         return <Adjectives closeTool={closeTool} />
+      case 'finder':
+        return <WordFinder closeTool={closeTool} />
+      case 'syn':
+        return <Synonyms closeTool={closeTool} />
       default:
         break;
     }
