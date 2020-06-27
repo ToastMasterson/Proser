@@ -4,8 +4,8 @@ export const DMuse = async (payload, queryType) => {
 
     const rhymeAPI = async () => {
         const queryString = payload.searchType === true 
-            ? `?ml=${payload.relationWord}` + `&rel_rhy=${payload.wordToRhyme}` + `&max=${payload.numberOfResults}`
-            : `?ml=${payload.relationWord}` +`?sl=${payload.wordToRhyme}` + `&max=${payload.numberOfResults}`
+            ? `?ml=${payload.relationWord}` + `&rel_rhy=${payload.searchWordOrPhrase}` + `&max=${payload.numberOfResults}`
+            : `?ml=${payload.relationWord}` +`?sl=${payload.searchWordOrPhrase}` + `&max=${payload.numberOfResults}`
 
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
@@ -17,8 +17,8 @@ export const DMuse = async (payload, queryType) => {
     const adjAPI = async () => {
 
         const queryString = payload.searchType === true 
-            ? `?rel_jjb=${payload.searchWord}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
-            : `?rel_jja=${payload.searchWord}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
+            ? `?rel_jjb=${payload.searchWordOrPhrase}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
+            : `?rel_jja=${payload.searchWordOrPhrase}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
     
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
@@ -30,8 +30,8 @@ export const DMuse = async (payload, queryType) => {
     const finderAPI = async () => {
 
         const queryString = payload.searchType === true 
-            ? `?ml=${payload.description}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
-            : `?rel_trg=${payload.description}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
+            ? `?ml=${payload.searchWordOrPhrase}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
+            : `?rel_trg=${payload.searchWordOrPhrase}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
     
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
@@ -43,8 +43,8 @@ export const DMuse = async (payload, queryType) => {
     const synAPI = async () => {
 
         const queryString = payload.searchType === true 
-            ? `?rel_syn=${payload.searchWord}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
-            : `?rel_ant=${payload.searchWord}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
+            ? `?rel_syn=${payload.searchWordOrPhrase}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
+            : `?rel_ant=${payload.searchWordOrPhrase}` + `&topics=${payload.relationWord}` + `&max=${payload.numberOfResults}`
     
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())

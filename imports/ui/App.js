@@ -3,16 +3,13 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './stylesheets/app.css'
 
-import Rhymer from './components/forms/Rhymer'
 import Editor from './components/Editor';
-import Adjectives from './components/forms/Adjectives'
 import Toolbar from './components/Toolbar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Sidebar from './components/Sidebar';
-import WordFinder from './components/forms/WordFinder';
-import Synonyms from './components/forms/Synonyms';
+import ToolForm from './components/forms/ToolForm';
 
 const App = () => {
 
@@ -28,16 +25,44 @@ const App = () => {
     setState({toolType: ''})
   }
 
+  const tools = [
+    {
+        header: 'Rhyme',
+        options: ['Rhymes With', 'Sounds Like'],
+        searchPhrases: ['Word to Rhyme', 'Word that Sounds Like'],
+        placeholder: ['orange', 'jirraf'],
+        searchType: 'rhyme'
+    }, {
+        header: 'Adjective or Noun',
+        options: ['Find Adjectives', 'Find Nouns from Adjective'],
+        searchPhrases: ['Word to Describe', 'Adjective to Find Noun From'],
+        placeholder: ['ocean', 'sticky'],
+        searchType: 'adj'
+    }, {
+        header: 'Word',
+        options: ['Use Description', 'Use Association Word'],
+        searchPhrases: ['Description or Phrase', 'Association Word'],
+        placeholder: ['ringing in the ears', 'cover'],
+        searchType: 'finder'
+    }, {
+        header: 'Synonym or Antonym',
+        options: ['Synonyms', 'Antonyms'],
+        searchPhrases: ['Search Word', 'Search Word'],
+        placeholder: ['happy', 'sad'],
+        searchType: 'syn'
+    }
+  ]
+
   const checkTool = () => {
     switch (state.toolType) {
       case 'rhyme':
-        return <Rhymer closeTool={closeTool} />
+        return <ToolForm closeTool={closeTool} tool={tools[0]} />
       case 'adj':
-        return <Adjectives closeTool={closeTool} />
+        return <ToolForm closeTool={closeTool} tool={tools[1]} />
       case 'finder':
-        return <WordFinder closeTool={closeTool} />
+        return <ToolForm closeTool={closeTool} tool={tools[2]} />
       case 'syn':
-        return <Synonyms closeTool={closeTool} />
+        return <ToolForm closeTool={closeTool} tool={tools[3]} />
       default:
         break;
     }
