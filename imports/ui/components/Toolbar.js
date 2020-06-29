@@ -1,29 +1,52 @@
-import React from 'react'
-
-import AccountsUIWrapper from '../AccountsUIWrapper'
+import React, { useState, useEffect } from 'react'
+import { withRouter } from 'react-router'
+import { Meteor } from 'meteor/meteor'
+import { Accounts } from 'meteor/accounts-base'
+import {accountContainer} from '../containers/accountContainer'
 import Navbar from 'react-bootstrap/Navbar'
-import NavDropdown from 'react-bootstrap/NavDropdown'
+import Dropdown from 'react-bootstrap/Dropdown'
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
 
-const Toolbar = ({handleTools}) => {
+const Toolbar = accountContainer((props) => {
 
+    const handleSignout = () => {
+        Meteor.logout(error => {
+            if (error) {
+                console.log(error.reason)
+            } else {
+                props.history.push('/')
+            }
+        })
+    }
+    
     return (
-        <Navbar bg="dark" variant="dark">
-            <Navbar.Brand>Proser</Navbar.Brand>
-            <NavDropdown title="File">
-                <NavDropdown.Item>New</NavDropdown.Item>
-                <NavDropdown.Item>Save</NavDropdown.Item>
-                <NavDropdown.Item>Open</NavDropdown.Item>
-                <NavDropdown.Item>Delete</NavDropdown.Item>
-            </NavDropdown>
-            <NavDropdown title="Tools">
-                <NavDropdown.Item onClick={() => handleTools('rhyme')}>Rhymer</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleTools('adj')}>Adjectives</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleTools('finder')}>Word Finder</NavDropdown.Item>
-                <NavDropdown.Item onClick={() => handleTools('syn')}>Synonyms/Antonyms</NavDropdown.Item>
-            </NavDropdown>
-            <AccountsUIWrapper />
-        </Navbar>
+        props.account.user
+            ?
+            <Navbar bg="dark" variant="dark" style={{justifyContent: 'space-between'}}>
+                <Navbar.Brand>Proser</Navbar.Brand>
+                <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                    <DropdownButton title="File">
+                        <Dropdown.Item>New</Dropdown.Item>
+                        <Dropdown.Item>Save</Dropdown.Item>
+                        <Dropdown.Item>Open</Dropdown.Item>
+                        <Dropdown.Item>Delete</Dropdown.Item>
+                    </DropdownButton>
+                    <DropdownButton title="Tools">
+                        <Dropdown.Item onClick={() => props.handleTools('rhyme')}>Rhymer</Dropdown.Item>
+                        <Dropdown.Item onClick={() => props.handleTools('adj')}>Adjectives</Dropdown.Item>
+                        <Dropdown.Item onClick={() => props.handleTools('finder')}>Word Finder</Dropdown.Item>
+                        <Dropdown.Item onClick={() => props.handleTools('syn')}>Synonyms/Antonyms</Dropdown.Item>
+                    </DropdownButton>
+                    <DropdownButton className="avatar" title={props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}>
+                        <Dropdown.Item>Settings</Dropdown.Item>
+                        <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
+                    </DropdownButton>
+                </div>
+            </Navbar>
+            : <div>Loading...</div>
     )
-}
+})
 
-export default Toolbar
+export default withRouter(Toolbar)

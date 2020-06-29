@@ -28,8 +28,12 @@ const Signup = (props) => {
         Accounts.createUser({
             email: state.email,
             password: state.password,
-            firstName: state.firstName,
-            lastName: state.lastName
+            createdAt: new Date(),
+            profile: {
+                firstName: state.firstName,
+                lastName: state.lastName,
+                avatar: ''
+            }
         }, error => {
             if (error) {
                 props.errorAlert(error.reason)

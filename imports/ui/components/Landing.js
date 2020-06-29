@@ -45,7 +45,7 @@ const Landing = () => {
 
     return (
         <Container>
-            <div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
                 <h1>Welcome to Proser!</h1>
             </div>
             <Container className="login">
