@@ -6,8 +6,7 @@ import {accountContainer} from '../containers/accountContainer'
 import Navbar from 'react-bootstrap/Navbar'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+
 
 const Toolbar = accountContainer((props) => {
 
@@ -30,6 +29,7 @@ const Toolbar = accountContainer((props) => {
                     <DropdownButton title="File">
                         <Dropdown.Item>New</Dropdown.Item>
                         <Dropdown.Item>Save</Dropdown.Item>
+                        <Dropdown.Item>Rename</Dropdown.Item>
                         <Dropdown.Item>Open</Dropdown.Item>
                         <Dropdown.Item>Delete</Dropdown.Item>
                     </DropdownButton>

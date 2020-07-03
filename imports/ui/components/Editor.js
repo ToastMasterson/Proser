@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
-const Editor = () => {
+const Editor = ({handleContent, content}) => {
 
     const modules = {
         toolbar: [
@@ -17,7 +17,14 @@ const Editor = () => {
     }
     
     return (
-        <ReactQuill theme="snow" modules={modules} style={{height: '100%'}} />
+        <ReactQuill 
+            id="Quill" 
+            theme="snow" 
+            modules={modules} 
+            value={content} 
+            onChange={handleContent} 
+            style={{height: '100vh'}} 
+        />
     )
 }
 

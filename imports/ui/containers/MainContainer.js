@@ -1,4 +1,9 @@
 import React, { useState } from 'react'
+
+import Notes from '../../api/notes'
+
+import Title from './Title'
+
 import ToolForm from '../components/forms/ToolForm'
 import Toolbar from '../components/Toolbar'
 import Sidebar from '../components/Sidebar'
@@ -10,15 +15,25 @@ import Container from 'react-bootstrap/Container'
 const MainContainer = () => {
 
     const [state, setState] = useState({
-        toolType: ""
+        toolType: "",
+        title: "Title",
+        content: ""
     })
     
     const handleTools = (toolType) => {
-        setState({toolType})
+        setState({...state, toolType})
+    }
+
+    const handleTitle = (title) => {
+        setState({...state, title})
+    }
+
+    const handleContent = (content) => {
+        setState({...state, content})
     }
 
     const closeTool = () => {
-        setState({toolType: ''})
+        setState({...state, toolType: ''})
     }
 
     const tools = [
@@ -73,7 +88,8 @@ const MainContainer = () => {
                 </Col>
                 <Col>
                     {checkTool()}
-                    <Editor />
+                    <Title handleTitle={handleTitle} html={state.title} />
+                    <Editor handleContent={handleContent} content={state.content} />
                 </Col>
             </Row>
         </Container>
