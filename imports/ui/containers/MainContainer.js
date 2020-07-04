@@ -105,7 +105,7 @@ const MainContainer = accountContainer(({account}) => {
 
     return ( 
         <Container fluid>
-            <Toolbar handleTools={handleTools} saveFile={saveFile} newFile={newFile} />
+            <Toolbar handleTools={handleTools} saveFile={saveFile} newFile={newFile} currentNote={state.currentNote._id} />
             <Row>
                 <Col sm={2}>
                     <Sidebar notes={state.notes} handleNotes={handleNotes} />
