@@ -10,7 +10,8 @@ export const noteHelper = async (currentNote) => {
                 {
                     title: currentNote.title,
                     content: currentNote.content,
-                    updatedAt: new Date()
+                    updatedAt: new Date(),
+                    createdAt: noteToUpdate.createdAt
                 }
             }, error => {
                 if (error) {
@@ -23,7 +24,8 @@ export const noteHelper = async (currentNote) => {
         const noteForReturn = await Notes.insert({
             title: currentNote.title,
             content: currentNote.content,
-            author: currentNote.author
+            author: currentNote.author,
+            createdAt: new Date()
         }, error => {
             if (error) {
                 console.log(error.reason)

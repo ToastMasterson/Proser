@@ -28,10 +28,7 @@ const NotesSchema = new SimpleSchema({
     },
     createdAt: {
         type: Date,
-        label: "Created At",
-        autoValue: function() {
-            return new Date()
-        }
+        label: "Created At"
     },
     updatedAt: {
         type: Date,

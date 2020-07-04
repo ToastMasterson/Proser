@@ -8,7 +8,7 @@ export const accountContainer = withTracker(() => {
 
     const user = Meteor.isServer ? null : Meteor.user()
     const userId = Meteor.isServer ? null : Meteor.userId()
-    const notes =  Notes.find({ author: Meteor.userId() }, { sort: { createdAt: -1 }}).fetch()
+    const notes =  Notes.find({ author: Meteor.userId() }, { sort: { updatedAt: -1 }}).fetch()
     return { account: {
         user,
         userId,
