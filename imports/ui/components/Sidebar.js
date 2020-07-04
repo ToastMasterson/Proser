@@ -1,16 +1,19 @@
 import React from 'react'
-import Container from 'react-bootstrap/Container'
-import ListGroup from 'react-bootstrap/ListGroup'
+import Nav from 'react-bootstrap/Nav'
+import Col from 'react-bootstrap/Col'
 
-const Sidebar = () => {
+const Sidebar = ({notes, handleNotes}) => {
 
     return (
-            <ListGroup>
-                <ListGroup.Item action>Note 1</ListGroup.Item>
-                <ListGroup.Item action>Note 2</ListGroup.Item>
-                <ListGroup.Item action>Note 3</ListGroup.Item>
-                <ListGroup.Item action>Note 4</ListGroup.Item>
-            </ListGroup>
+        <Nav variant='pills'>
+            <Col>
+                {notes.map(note => (
+                    <Nav.Item>
+                        <Nav.Link onClick={() => handleNotes(note)} action="true">{note.title}</Nav.Link>
+                    </Nav.Item>
+                ))}
+            </Col>
+        </Nav>
     )
 }
 

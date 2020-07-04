@@ -1,4 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+import { noteHelper } from '../../helpers/noteHelper'
+
+import Title from './Title'
+
 import ToolForm from '../components/forms/ToolForm'
 import Toolbar from '../components/Toolbar'
 import Sidebar from '../components/Sidebar'
@@ -6,19 +11,53 @@ import Editor from '../components/Editor'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
+import { accountContainer } from './accountContainer'
 
-const MainContainer = () => {
+const MainContainer = accountContainer(({account}) => {
+
+    const defaultNote = {
+        _id: null,
+        title: "Title",
+        content: ""
+    }
 
     const [state, setState] = useState({
-        toolType: ""
+        toolType: "",
+        notes: account.notes,
+        currentNote: account.notes[0] || defaultNote
     })
+
+    useEffect(() => {
+        setState({
+            notes: account.notes,
+            currentNote: account.notes[0] || defaultNote
+        })
+    }, account.notes)
+
+    const saveFile = () => {
+        const currentNote = {
+            id: state.currentNote._id,
+            title: document.getElementById("Title").innerText,
+            content: document.getElementsByClassName("ql-editor")[0].innerHTML,
+            author: account.userId
+        }
+        noteHelper(currentNote)
+    }
+
+    const newFile = () => {
+        setState({...state, currentNote: defaultNote})
+    }
+
+    const handleNotes = (note) => {
+        setState({...state, currentNote: note})
+    }
     
     const handleTools = (toolType) => {
-        setState({toolType})
+        setState({...state, toolType})
     }
 
     const closeTool = () => {
-        setState({toolType: ''})
+        setState({...state, toolType: ''})
     }
 
     const tools = [
@@ -66,18 +105,19 @@ const MainContainer = () => {
 
     return ( 
         <Container fluid>
-            <Toolbar handleTools={handleTools} />
+            <Toolbar handleTools={handleTools} saveFile={saveFile} newFile={newFile} />
             <Row>
                 <Col sm={2}>
-                    <Sidebar />
+                    <Sidebar notes={state.notes} handleNotes={handleNotes} />
                 </Col>
                 <Col>
                     {checkTool()}
-                    <Editor />
+                    <Title initialTitle={state.currentNote.title} />
+                    <Editor initialContent={state.currentNote.content} />
                 </Col>
             </Row>
         </Container>
     )
-}
+})
 
 export default MainContainer
