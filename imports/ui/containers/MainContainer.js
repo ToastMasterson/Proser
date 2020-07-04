@@ -32,7 +32,7 @@ const MainContainer = accountContainer(({account}) => {
             notes: account.notes,
             currentNote: account.notes[0] || defaultNote
         })
-    }, account.notes)
+    }, [account.notes])
 
     const saveFile = () => {
         const currentNote = {
