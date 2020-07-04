@@ -27,8 +27,8 @@ const Toolbar = accountContainer((props) => {
                 <Navbar.Brand>Proser</Navbar.Brand>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <DropdownButton title="File">
-                        <Dropdown.Item>New</Dropdown.Item>
-                        <Dropdown.Item>Save</Dropdown.Item>
+                        <Dropdown.Item onClick={props.newFile}>New</Dropdown.Item>
+                        <Dropdown.Item onClick={props.saveFile}>Save</Dropdown.Item>
                         <Dropdown.Item>Rename</Dropdown.Item>
                         <Dropdown.Item>Open</Dropdown.Item>
                         <Dropdown.Item>Delete</Dropdown.Item>

@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ContentEditable from 'react-contenteditable'
 
-const Title = ({handleTitle, html}) => {
+const Title = ({initialTitle}) => {
+
+    const [title, setTitle] = useState(initialTitle)
+
+    useEffect(() => {
+        setTitle(initialTitle)
+    })
 
     return (
         <ContentEditable
-            html={html}
-            onChange={(event) => handleTitle(event.target.value)}
+            id="Title"
+            html={title}
             tagName="h1"
         />
     )

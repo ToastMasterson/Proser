@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
-const Editor = ({handleContent, content}) => {
+const Editor = ({ initialContent }) => {
+
+    const [content, setContent] = useState(initialContent)
+
+    useEffect(() => {
+        setContent(initialContent)
+    })
 
     const modules = {
         toolbar: [
@@ -21,8 +27,7 @@ const Editor = ({handleContent, content}) => {
             id="Quill" 
             theme="snow" 
             modules={modules} 
-            value={content} 
-            onChange={handleContent} 
+            value={content}  
             style={{height: '100vh'}} 
         />
     )
