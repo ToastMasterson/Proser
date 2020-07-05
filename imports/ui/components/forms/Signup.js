@@ -12,12 +12,12 @@ const SignupSchema = Yup.object({
     firstName: Yup.string()
         .min(2, 'Name too short')
         .max(20, 'Name too long')
-        .matches(/[a-zA-Z]/)
+        .matches(/^[a-zA-z]+$/, 'Can only include letters')
         .required('First name required'),
     lastName: Yup.string()
         .min(2, 'Name too short')
         .max(20, 'Name too long')
-        .matches(/[a-zA-Z]/)
+        .matches(/^[a-zA-z]+$/, 'Can only include letters')
         .required('Last name required'),
     email: Yup.string()
         .max(100, 'Email is too long')
