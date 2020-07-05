@@ -1,16 +1,20 @@
 export const DMuse = async (payload, queryType) => {
 
+    console.log(payload)
+
     const wordsEndpoint = 'https://api.datamuse.com/words'
 
     const rhymeAPI = async () => {
         const queryString = payload.searchType === true 
             ? `?ml=${payload.relationWord}` + `&rel_rhy=${payload.searchWordOrPhrase}` + `&max=${payload.numberOfResults}`
-            : `?ml=${payload.relationWord}` +`?sl=${payload.searchWordOrPhrase}` + `&max=${payload.numberOfResults}`
+            : `?ml=${payload.relationWord}` +`&sl=${payload.searchWordOrPhrase}` + `&max=${payload.numberOfResults}`
 
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
             .catch(error => console.log(error))
 
+
+        console.log(queryString, results)
         return results
     }
 

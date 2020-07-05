@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router'
 import { Meteor } from 'meteor/meteor'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import { withRouter } from 'react-router'
 
 const Login = (props) => {
     const [state, setState] = useState({
@@ -29,14 +32,14 @@ const Login = (props) => {
         <Form onSubmit={handleLogin}>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control name="email" type="email" placeholder="Enter email" onChange={handleChange} />
+                <Form.Control required name="email" type="email" placeholder="Enter email" onChange={handleChange} />
                 <Form.Text className="text-muted">
                     We'll never share your email with anyone else.
                 </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control name="password" type="password" placeholder="Password" onChange={handleChange} />
+                <Form.Control required name="password" type="password" placeholder="Password" onChange={handleChange} />
             </Form.Group>
             <Button variant="primary" type="submit">
                 Log In
