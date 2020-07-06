@@ -45,25 +45,27 @@ const Toolbar = accountContainer((props) => {
     }
     
     return (
-        <Navbar bg="dark" variant="dark" style={{justifyContent: 'space-between'}}>
+        <Navbar expand="md" bg="dark" variant="dark" style={{justifyContent: 'space-between'}}>
             <Navbar.Brand>Proser</Navbar.Brand>
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                <DropdownButton title="File">
+            <Navbar.Collapse style={{justifyContent: 'flex-end'}}>
+            {/* <div style={{display: 'flex', justifyContent: 'space-between'}}> */}
+                <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} title="File">
                     <Dropdown.Item onClick={props.newFile}>New</Dropdown.Item>
                     <Dropdown.Item onClick={props.saveFile}>Save</Dropdown.Item>
                     <Dropdown.Item onClick={handleModal}>Delete</Dropdown.Item>
                 </DropdownButton>
-                <DropdownButton title="Tools">
+                <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} title="Tools">
                     <Dropdown.Item onClick={() => props.handleTools('rhyme')}>Rhymer</Dropdown.Item>
                     <Dropdown.Item onClick={() => props.handleTools('adj')}>Adjectives</Dropdown.Item>
                     <Dropdown.Item onClick={() => props.handleTools('finder')}>Word Finder</Dropdown.Item>
                     <Dropdown.Item onClick={() => props.handleTools('syn')}>Synonyms/Antonyms</Dropdown.Item>
                 </DropdownButton>
-                <DropdownButton className="avatar" title={props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}>
+                <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} className="avatar" title={props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}>
                     <Dropdown.Item>Settings</Dropdown.Item>
                     <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
                 </DropdownButton>
-            </div>
+            </Navbar.Collapse>
+            {/* </div> */}
             <Modal
                 show={show}
                 onHide={handleClose}

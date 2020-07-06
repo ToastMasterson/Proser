@@ -6,7 +6,7 @@ const Sidebar = ({notes, handleNotes}) => {
     const checkNotes = () => {
         return notes.length > 0
             ? 
-            <Nav variant="pills" className="flex-column" defaultActiveKey={'/' + notes[0].title}>
+            <Nav variant="pills" className="flex-column" defaultActiveKey={'/' + notes[0].title} style={{marginTop: '5px'}}>
                 {notes.map(note => (
                     <Nav.Item>
                         <Nav.Link onClick={() => handleNotes(note)} eventKey={'/' + note.title}>{note.title}</Nav.Link>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { noteHelper } from '../../helpers/noteHelper'
+import { accountContainer } from './accountContainer'
 
 import Title from './Title'
 
@@ -11,7 +12,7 @@ import Editor from '../components/Editor'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import { accountContainer } from './accountContainer'
+import Modal from 'react-bootstrap/Modal'
 
 const MainContainer = accountContainer(({account}) => {
 
@@ -107,7 +108,7 @@ const MainContainer = accountContainer(({account}) => {
         <Container fluid>
             <Toolbar handleTools={handleTools} saveFile={saveFile} newFile={newFile} currentNote={state.currentNote._id} />
             <Row>
-                <Col sm={2}>
+                <Col xs={2}>
                     <Sidebar notes={state.notes} handleNotes={handleNotes} />
                 </Col>
                 <Col>
