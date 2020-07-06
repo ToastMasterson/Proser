@@ -5,16 +5,23 @@ import { Meteor } from 'meteor/meteor'
 import { Notes } from '../../api/notes'
 import {accountContainer} from '../containers/accountContainer'
 
-import Navbar from 'react-bootstrap/Navbar'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import MenuIcon from '@material-ui/icons/Menu'
+
+import AppBar from '@material-ui/core/AppBar'
+
+import { appBarStyles } from '../stylesheets/appBar'
+import { Toolbar, IconButton, Typography, Hidden } from '@material-ui/core'
 
 
-const Toolbar = accountContainer((props) => {
+const Navbar = accountContainer((props) => {
 
     const [show, setShow] = useState(false)
+    
+    const classes = appBarStyles()
 
     const handleSignout = () => {
         Meteor.logout(error => {
@@ -45,10 +52,19 @@ const Toolbar = accountContainer((props) => {
     }
     
     return (
-        <Navbar expand="md" bg="dark" variant="dark" style={{justifyContent: 'space-between'}}>
-            <Navbar.Brand>Proser</Navbar.Brand>
-            <Navbar.Collapse style={{justifyContent: 'flex-end'}}>
-            {/* <div style={{display: 'flex', justifyContent: 'space-between'}}> */}
+        <AppBar position="relative" className={classes.appBar}>
+            <Toolbar>
+                <Hidden mdUp>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={props.handleDrawerToggle}
+                        className={classes.menuButton}>
+                            <MenuIcon />
+                    </IconButton>
+                </Hidden>
+                <Typography variant="h6" noWrap>Proser</Typography>
                 <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} title="File">
                     <Dropdown.Item onClick={props.newFile}>New</Dropdown.Item>
                     <Dropdown.Item onClick={props.saveFile}>Save</Dropdown.Item>
@@ -64,8 +80,6 @@ const Toolbar = accountContainer((props) => {
                     <Dropdown.Item>Settings</Dropdown.Item>
                     <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
                 </DropdownButton>
-            </Navbar.Collapse>
-            {/* </div> */}
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -85,8 +99,9 @@ const Toolbar = accountContainer((props) => {
                     <Button variant="danger" onClick={handleDelete}>Delete Note</Button>
                 </Modal.Footer>
             </Modal>
-        </Navbar>
+            </Toolbar>
+        </AppBar>
     )
 })
 
-export default withRouter(Toolbar)
+export default withRouter(Navbar)

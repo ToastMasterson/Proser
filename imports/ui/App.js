@@ -8,6 +8,7 @@ import MainContainer from './containers/MainContainer'
 import Landing from './components/Landing';
 import { accountContainer } from './containers/accountContainer';
 import Loading from './components/Loading';
+import CssBaseline from '@material-ui/core/CssBaseline'
 
 const App = accountContainer(() => {
 
@@ -23,6 +24,7 @@ const App = accountContainer(() => {
 
   return (
     <div id="App">
+      <CssBaseline />
       {checkUser() }
     </div>
   )
