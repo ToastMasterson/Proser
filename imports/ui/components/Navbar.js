@@ -5,23 +5,41 @@ import { Meteor } from 'meteor/meteor'
 import { Notes } from '../../api/notes'
 import {accountContainer} from '../containers/accountContainer'
 
-import Dropdown from 'react-bootstrap/Dropdown'
-import DropdownButton from 'react-bootstrap/DropdownButton'
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
+import Button from '@material-ui/core/Button'
+import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
 
 import AppBar from '@material-ui/core/AppBar'
 
 import { appBarStyles } from '../stylesheets/appBar'
-import { Toolbar, IconButton, Typography, Hidden } from '@material-ui/core'
+import { Toolbar, IconButton, Typography, Hidden, MenuItem } from '@material-ui/core'
 
 
 const Navbar = accountContainer((props) => {
 
-    const [show, setShow] = useState(false)
+    const [state, setState] = useState({
+        show: false,
+        anchorEl: null,
+        button: null
+    })
     
     const classes = appBarStyles()
+
+    const DropDown = (props) => (
+        <Menu
+            elevation={0}
+            getContentAnchorEl={null}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            {...props}/>
+    )
 
     const handleSignout = () => {
         Meteor.logout(error => {
@@ -34,11 +52,20 @@ const Navbar = accountContainer((props) => {
     }
 
     const handleModal = () => {
-        setShow(true)
+        setState({...state, show: true})
     }
 
-    const handleClose = () => {
-        setShow(false)
+    const handleModalClose = () => {
+        setState({...state, show: false})
+    }
+
+    const handleClick = (event, button) => {
+        console.log(event.currentTarget)
+        setState({...state, anchorEl: event.currentTarget, button: button})
+    }
+    
+    const handleMenuClose = () => {
+        setState({...state, anchorEl: null, button: null})
     }
 
     const handleDelete = () => {
@@ -46,7 +73,7 @@ const Navbar = accountContainer((props) => {
             if (error) {
                 console.log(error.reason)
             } else {
-                handleClose()
+                handleModalClose()
             }
         })
     }
@@ -64,25 +91,46 @@ const Navbar = accountContainer((props) => {
                             <MenuIcon />
                     </IconButton>
                 </Hidden>
-                <Typography variant="h6" noWrap>Proser</Typography>
-                <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} title="File">
-                    <Dropdown.Item onClick={props.newFile}>New</Dropdown.Item>
-                    <Dropdown.Item onClick={props.saveFile}>Save</Dropdown.Item>
-                    <Dropdown.Item onClick={handleModal}>Delete</Dropdown.Item>
-                </DropdownButton>
-                <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} title="Tools">
-                    <Dropdown.Item onClick={() => props.handleTools('rhyme')}>Rhymer</Dropdown.Item>
-                    <Dropdown.Item onClick={() => props.handleTools('adj')}>Adjectives</Dropdown.Item>
-                    <Dropdown.Item onClick={() => props.handleTools('finder')}>Word Finder</Dropdown.Item>
-                    <Dropdown.Item onClick={() => props.handleTools('syn')}>Synonyms/Antonyms</Dropdown.Item>
-                </DropdownButton>
-                <DropdownButton alignRight drop="down" size="sm" style={{margin: '5px'}} className="avatar" title={props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}>
-                    <Dropdown.Item>Settings</Dropdown.Item>
-                    <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
-                </DropdownButton>
+                <Typography className={classes.title} variant="h6" noWrap>Proser</Typography>
+                <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'file')}>
+                    File
+                </Button>
+                <DropDown 
+                    anchorEl={state.anchorEl}
+                    keepMounted
+                    open={state.button === 'file'}
+                    onClose={handleMenuClose}>
+                    <MenuItem onClick={props.newFile}>New</MenuItem>
+                    <MenuItem onClick={props.saveFile}>Save</MenuItem>
+                    <MenuItem onClick={handleModal}>Delete</MenuItem>
+                </DropDown>
+                <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'tools')}>
+                    Tools
+                </Button>
+                <DropDown
+                    anchorEl={state.anchorEl}
+                    keepMounted
+                    open={state.button === 'tools'}
+                    onClose={handleMenuClose}>
+                    <MenuItem onClick={() => props.handleTools('rhyme')}>Rhymer</MenuItem>
+                    <MenuItem onClick={() => props.handleTools('adj')}>Adjectives</MenuItem>
+                    <MenuItem onClick={() => props.handleTools('finder')}>Word Finder</MenuItem>
+                    <MenuItem onClick={() => props.handleTools('syn')}>Synonyms/Antonyms</MenuItem>
+                </DropDown>
+                <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'user')}>
+                    {props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}
+                </Button>
+                <DropDown
+                    anchorEl={state.anchorEl}
+                    keepMounted
+                    open={state.button === 'user'}
+                    onClose={handleMenuClose}>
+                    <MenuItem>Settings</MenuItem>
+                    <MenuItem onClick={handleSignout}>Sign Out</MenuItem>
+                </DropDown>
             <Modal
-                show={show}
-                onHide={handleClose}
+                show={state.show}
+                onHide={handleModalClose}
                 backdrop="static"
                 keyboard={false}
             >
@@ -93,7 +141,7 @@ const Navbar = accountContainer((props) => {
                     Once you delete this note it cannot be recovered.
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleModalClose}>
                         Cancel
                     </Button>
                     <Button variant="danger" onClick={handleDelete}>Delete Note</Button>

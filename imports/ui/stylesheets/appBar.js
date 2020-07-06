@@ -15,7 +15,6 @@ export const appBarStyles = makeStyles((theme) => ({
         display: 'none',
       },
     },
-    // necessary for content to be below app bar
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
@@ -24,4 +23,7 @@ export const appBarStyles = makeStyles((theme) => ({
       flexGrow: 1,
       padding: theme.spacing(3),
     },
+    title: {
+      flexGrow: 1
+    }
 }));
