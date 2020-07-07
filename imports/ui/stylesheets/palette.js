@@ -10,6 +10,9 @@ export const theme = createMuiTheme({
       },
       info: {
         main: '#918c65'
+      },
+      error: {
+        main: '#d32f2f'
       }
     },
   });

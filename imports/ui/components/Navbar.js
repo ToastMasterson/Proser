@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor'
 import { Notes } from '../../api/notes'
 import {accountContainer} from '../containers/accountContainer'
 
-import Modal from 'react-bootstrap/Modal'
+import Modal from '@material-ui/core/Modal'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -13,7 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import AppBar from '@material-ui/core/AppBar'
 
 import { appBarStyles } from '../stylesheets/appBar'
-import { Toolbar, IconButton, Typography, Hidden, MenuItem } from '@material-ui/core'
+import { Toolbar, IconButton, Typography, Hidden, MenuItem, Backdrop, Fade } from '@material-ui/core'
 
 
 const Navbar = accountContainer((props) => {
@@ -60,12 +60,43 @@ const Navbar = accountContainer((props) => {
     }
 
     const handleClick = (event, button) => {
-        console.log(event.currentTarget)
         setState({...state, anchorEl: event.currentTarget, button: button})
     }
     
     const handleMenuClose = () => {
         setState({...state, anchorEl: null, button: null})
+    }
+
+    const handleSelect = (choice) => {
+        handleMenuClose()
+        switch (choice) {
+            case 'new':
+                props.newFile()
+                break;
+            case 'save':
+                props.saveFile()
+                break;
+            case 'delete':
+                handleDelete()
+                break;
+            case 'rhyme':
+                props.handleTools('rhyme')
+                break;
+            case 'adj':
+                props.handleTools('adj')
+                break
+            case 'syn':
+                props.handleTools('syn')
+                break
+            case 'finder':
+                props.handleTools('finder')
+                break
+            case 'signout':
+                handleSignout()
+                break
+            default:
+                break;
+        }
     }
 
     const handleDelete = () => {
@@ -97,12 +128,11 @@ const Navbar = accountContainer((props) => {
                 </Button>
                 <DropDown 
                     anchorEl={state.anchorEl}
-                    keepMounted
                     open={state.button === 'file'}
                     onClose={handleMenuClose}>
-                    <MenuItem onClick={props.newFile}>New</MenuItem>
-                    <MenuItem onClick={props.saveFile}>Save</MenuItem>
-                    <MenuItem onClick={handleModal}>Delete</MenuItem>
+                    <MenuItem onClick={() => handleSelect('new')}>New</MenuItem>
+                    <MenuItem onClick={() => handleSelect('save')}>Save</MenuItem>
+                    <MenuItem onClick={() => handleSelect('delete')}>Delete</MenuItem>
                 </DropDown>
                 <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'tools')}>
                     Tools
@@ -112,10 +142,10 @@ const Navbar = accountContainer((props) => {
                     keepMounted
                     open={state.button === 'tools'}
                     onClose={handleMenuClose}>
-                    <MenuItem onClick={() => props.handleTools('rhyme')}>Rhymer</MenuItem>
-                    <MenuItem onClick={() => props.handleTools('adj')}>Adjectives</MenuItem>
-                    <MenuItem onClick={() => props.handleTools('finder')}>Word Finder</MenuItem>
-                    <MenuItem onClick={() => props.handleTools('syn')}>Synonyms/Antonyms</MenuItem>
+                    <MenuItem onClick={() => handleSelect('rhyme')}>Rhymer</MenuItem>
+                    <MenuItem onClick={() => handleSelect('adj')}>Adjectives</MenuItem>
+                    <MenuItem onClick={() => handleSelect('finder')}>Word Finder</MenuItem>
+                    <MenuItem onClick={() => handleSelect('syn')}>Synonyms/Antonyms</MenuItem>
                 </DropDown>
                 <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'user')}>
                     {props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}
@@ -126,26 +156,29 @@ const Navbar = accountContainer((props) => {
                     open={state.button === 'user'}
                     onClose={handleMenuClose}>
                     <MenuItem>Settings</MenuItem>
-                    <MenuItem onClick={handleSignout}>Sign Out</MenuItem>
+                    <MenuItem onClick={() => handleSelect('signout')}>Sign Out</MenuItem>
                 </DropDown>
             <Modal
-                show={state.show}
-                onHide={handleModalClose}
-                backdrop="static"
-                keyboard={false}
+                open={state.show}
+                onClose={handleModalClose}
+                BackdropComponent={Backdrop}
+                BackdropProps={{timeout: 500}}
+                className={classes.modal}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Confirm Deletion</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    Once you delete this note it cannot be recovered.
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handleModalClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="danger" onClick={handleDelete}>Delete Note</Button>
-                </Modal.Footer>
+                <Fade in={state.show}>
+                    <div className={classes.modalPaper}>
+                        <Typography variant="h5">
+                            Confirm Deletion
+                        </Typography>
+                        <Typography variant="body1">
+                            Once you delete this note it cannot be recovered.
+                        </Typography>
+                        <Button variant="contained" onClick={handleModalClose}>
+                            Cancel
+                        </Button>
+                        <Button variant="contained" style={{backgroundColor: "#d32f2f"}} onClick={handleDelete}>Delete Note</Button>
+                    </div>
+                </Fade>
             </Modal>
             </Toolbar>
         </AppBar>
