@@ -27,7 +27,7 @@ const Sidebar = ({notes, handleNotes}) => {
                 onChange={handleChange}
             >
                 {notes.map(note => (
-                        <Tab label={note.title} onClick={() => handleNotes(note)} />
+                    <Tab key={note._id} label={note.title} onClick={() => handleNotes(note)} />
                 ))}
             </Tabs>
             : null
@@ -35,8 +35,8 @@ const Sidebar = ({notes, handleNotes}) => {
 
     return (
         <div className={classes.tabs}>
-        <Typography variant="h5" align="center" gutterBottom>Your Notes</Typography>
-        <Divider />
+            <Typography variant="h5" align="center" gutterBottom>Your Notes</Typography>
+            <Divider />
             {checkNotes()}
         </div>
     )

@@ -13,8 +13,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import AppBar from '@material-ui/core/AppBar'
 
 import { appBarStyles } from '../stylesheets/appBar'
-import { Toolbar, IconButton, Typography, Hidden, MenuItem, Backdrop, Fade } from '@material-ui/core'
-
+import { Toolbar, IconButton, Typography, Hidden, MenuItem, Backdrop, Fade, ButtonGroup } from '@material-ui/core'
+import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone'
 
 const Navbar = accountContainer((props) => {
 
@@ -122,34 +122,40 @@ const Navbar = accountContainer((props) => {
                             <MenuIcon />
                     </IconButton>
                 </Hidden>
+                {/* <img className={classes.logo} src="/assets/logo.png" alt="Logo" /> */}
                 <Typography className={classes.title} variant="h6" noWrap>Proser</Typography>
-                <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'file')}>
-                    File
-                </Button>
-                <DropDown 
-                    anchorEl={state.anchorEl}
-                    open={state.button === 'file'}
-                    onClose={handleMenuClose}>
-                    <MenuItem onClick={() => handleSelect('new')}>New</MenuItem>
-                    <MenuItem onClick={() => handleSelect('save')}>Save</MenuItem>
-                    <MenuItem onClick={() => handleSelect('delete')}>Delete</MenuItem>
-                </DropDown>
-                <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'tools')}>
-                    Tools
-                </Button>
-                <DropDown
-                    anchorEl={state.anchorEl}
-                    keepMounted
-                    open={state.button === 'tools'}
-                    onClose={handleMenuClose}>
-                    <MenuItem onClick={() => handleSelect('rhyme')}>Rhymer</MenuItem>
-                    <MenuItem onClick={() => handleSelect('adj')}>Adjectives</MenuItem>
-                    <MenuItem onClick={() => handleSelect('finder')}>Word Finder</MenuItem>
-                    <MenuItem onClick={() => handleSelect('syn')}>Synonyms/Antonyms</MenuItem>
-                </DropDown>
-                <Button color="secondary" variant="contained" onClick={(event) => handleClick(event, 'user')}>
-                    {props.account.user.profile.firstName + ' ' + props.account.user.profile.lastName}
-                </Button>
+                <ButtonGroup variant="text" color="secondary">
+                    <Button onClick={(event) => handleClick(event, 'file')}>
+                        File
+                    </Button>
+                    <Button onClick={(event) => handleClick(event, 'tools')}>
+                        Tools
+                    </Button>
+                    <Button onClick={(event) => handleClick(event, 'user')}>
+                        <AccountCircleTwoToneIcon style={{marginRight: 5}} />
+                        <Hidden smDown>
+                            {props.account.user.profile.firstName[0] + '. ' + props.account.user.profile.lastName}
+                        </Hidden>
+                    </Button>
+                </ButtonGroup>
+                    <DropDown 
+                        anchorEl={state.anchorEl}
+                        open={state.button === 'file'}
+                        onClose={handleMenuClose}>
+                        <MenuItem onClick={() => handleSelect('new')}>New</MenuItem>
+                        <MenuItem onClick={() => handleSelect('save')}>Save</MenuItem>
+                        <MenuItem onClick={() => handleSelect('delete')}>Delete</MenuItem>
+                    </DropDown>
+                    <DropDown
+                        anchorEl={state.anchorEl}
+                        keepMounted
+                        open={state.button === 'tools'}
+                        onClose={handleMenuClose}>
+                        <MenuItem onClick={() => handleSelect('rhyme')}>Rhymer</MenuItem>
+                        <MenuItem onClick={() => handleSelect('adj')}>Adjectives</MenuItem>
+                        <MenuItem onClick={() => handleSelect('finder')}>Word Finder</MenuItem>
+                        <MenuItem onClick={() => handleSelect('syn')}>Synonyms/Antonyms</MenuItem>
+                    </DropDown>
                 <DropDown
                     anchorEl={state.anchorEl}
                     keepMounted
