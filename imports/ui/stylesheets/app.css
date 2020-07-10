@@ -1,5 +1,6 @@
 #App {
     height: 100vh;
+    font-family: "Roboto";
 }
 
 .login {
@@ -22,4 +23,8 @@
     padding: 10px;
     margin: 5px;
     text-align: center;
+}
+
+.form-group {
+    margin-bottom: 0.5rem;
 }
