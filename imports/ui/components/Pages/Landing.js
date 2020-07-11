@@ -4,8 +4,8 @@ import { Accounts } from 'meteor/accounts-base'
 import Container from 'react-bootstrap/Container'
 import Alert from 'react-bootstrap/Alert'
 import Nav from 'react-bootstrap/Nav'
-import Signup from './forms/Signup'
-import Login from './forms/Login'
+import Signup from '../forms/Signup'
+import Login from '../forms/Login'
 
 const Landing = () => {
 

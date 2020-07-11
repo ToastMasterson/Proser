@@ -67,7 +67,7 @@ export const DMuse = async (payload, queryType) => {
         case 'syn':
             return synAPI()
         default:
-            break;
+            break
     }
 
     

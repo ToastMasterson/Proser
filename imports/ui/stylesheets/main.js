@@ -1,21 +1,18 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 export const mainStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
     },
+    Main: {
+      padding: 0
+    },
     drawer: {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
         flexShrink: 0,
-      },
-    },
-    appBar: {
-      [theme.breakpoints.up('sm')]: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
       },
     },
     menuButton: {
@@ -37,19 +34,5 @@ export const mainStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('md')]: {
           marginLeft: drawerWidth
       }
-    },
-    tabs: {
-        marginTop: 30
-    },
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    modalPaper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
     }
-  }));
+}))

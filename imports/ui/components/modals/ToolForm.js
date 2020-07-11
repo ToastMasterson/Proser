@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
+
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-
 import { DMuse } from '../../../helpers/dmuse'
 
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button'
-import Container from 'react-bootstrap/Container'
+import Container from '@material-ui/core/Container'
 import Modal from '@material-ui/core/Modal'
-import { Backdrop, Fade, Typography } from '@material-ui/core'
-import { mainStyles } from '../../stylesheets/main'
+import { Backdrop, Fade, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core'
+
+import { modalStyles } from '../../stylesheets/modal'
 
 const ToolFormSchema = Yup.object({
     searchWordOrPhrase: Yup.string()
@@ -33,16 +34,21 @@ const ToolFormSchema = Yup.object({
 const ToolForm = ({closeTool, tool}) => {
     const [state, setState] = useState({
         searchType: true,
-        results: []
+        results: [],
+        expanded: 'panel1'
     })
 
-    const classes = mainStyles()
+    const classes = modalStyles()
 
     const initialValues = {
         searchWordOrPhrase: '',
         relationWord: '',
         searchType: true,
         numberOfResults: 100,
+    }
+
+    const handlePanel = (panel) => (event, newExpanded) => {
+        setState({...state, expanded: newExpanded ? panel : false})
     }
 
     const handleRadio = () => {
@@ -52,10 +58,8 @@ const ToolForm = ({closeTool, tool}) => {
     const handleQuery = async (values) => {
         event.preventDefault()
         const query = {...values, searchType: state.searchType}
-        console.log(values, query)
         let results = await (DMuse(query, tool.searchType))
-        console.log(results)
-        setState({ ...state, results })
+        setState({ ...state, results, expanded: 'panel2' })
     }
 
     return (
@@ -68,10 +72,14 @@ const ToolForm = ({closeTool, tool}) => {
         >
             <Fade in>
                 <div className={classes.modalPaper}>
-                    <Typography variant="h5">
-                        Find a {tool.header}
-                    </Typography>
-                    <Container fluid style={{fontSize: '1.3vw'}}>
+                <Accordion classes={{root: classes.expansionPanel, disabled: classes.disabled}} square expanded={state.expanded === 'panel1'} onChange={handlePanel('panel1')} disabled={state.expanded === 'panel1'}>
+                    <AccordionSummary classes={{root: classes.panelSummary, disabled: classes.disabled}}>
+                        <Typography variant="h5">
+                            Find a {tool.header}
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails classes={{root: classes.panelContent}}>
+                    <Container className={classes.toolForm}>
                         <Formik validationSchema={ToolFormSchema} onSubmit={values => handleQuery(values)} initialValues={initialValues}>
                             {({ handleSubmit, handleChange, touched, errors, isValid, values }) => (
                                 <Form noValidate onSubmit={handleSubmit}>
@@ -132,7 +140,7 @@ const ToolForm = ({closeTool, tool}) => {
                                                 size="sm" 
                                                 name="numberOfResults" 
                                                 value={values.numberOfResults}
-                                                isValid={touched.numberOfResults && !errors.numberOfResults}
+                                                // isValid={touched.numberOfResults && !errors.numberOfResults}
                                                 type="number" 
                                                 placeholder="100" 
                                                 onChange={handleChange} />
@@ -142,18 +150,24 @@ const ToolForm = ({closeTool, tool}) => {
                                     <div style={{width: '80%', margin: 'auto'}}>
                                         <Button variant="primary" type="submit" size="sm" block>Submit</Button>
                                     </div>
-                                    <Form.Group controlId="submit">
-                                        <Form.Label column sm={4}>Results</Form.Label>
-                                        <Col sm={10} style={{margin: 'auto'}}>
-                                            <Form.Control name="results" as="textarea" readOnly 
-                                                value={state.results.length < 1 
-                                                    ? 'No results found, try something else!' : state.results.map(word => ' ' + word.word)} />
-                                        </Col>
-                                    </Form.Group>
                                 </Form>
                             )}
                         </Formik>
                     </Container>
+                    </AccordionDetails>
+                    </Accordion>
+                    <Accordion classes={{root: classes.expansionPanel, disabled: classes.disabled}} square expanded={state.expanded === 'panel2'} onChange={handlePanel('panel2')} disabled={state.expanded === 'panel2'}>
+                        <AccordionSummary classes={{root: classes.panelSummary, disabled: classes.disabled}}>
+                            <Typography variant="h5">Results</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails className={classes.panelContent}>
+                            <Container maxWidth="sm">
+                                <Typography variant="body2">
+                                    {state.results.length < 1 ? 'No results found, try something else!' : state.results.map(word => ' ' + word.word)}
+                                </Typography>
+                            </Container>
+                        </AccordionDetails>
+                    </Accordion>
                 </div>
             </Fade>
             

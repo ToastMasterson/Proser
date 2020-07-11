@@ -4,13 +4,13 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { Typography, Divider } from '@material-ui/core'
 
-import { mainStyles } from '../stylesheets/main'
+import { sidebarStyles } from '../stylesheets/sidebar'
 
 const Sidebar = ({notes, handleNotes}) => {
 
-    const [value, setValue] = useState(0)
+    const classes = sidebarStyles()
 
-    const classes = mainStyles()
+    const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -24,8 +24,7 @@ const Sidebar = ({notes, handleNotes}) => {
                 orientation="vertical"
                 variant="scrollable"
                 value={value}
-                onChange={handleChange}
-            >
+                onChange={handleChange}>
                 {notes.map(note => (
                     <Tab key={note._id} label={note.title} onClick={() => handleNotes(note)} />
                 ))}

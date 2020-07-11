@@ -1,13 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
-export const appBarStyles = makeStyles((theme) => ({
-    appBar: {
+export const appbarStyles = makeStyles((theme) => ({
+    appbar: {
       [theme.breakpoints.up('md')]: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth
       },
+      backgroundImage: `url("https://www.photohdx.com/images/2016/02/yellow-brown-leather-texture-background.jpg")`,
+      backgroundSize: 'cover'
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -15,29 +17,7 @@ export const appBarStyles = makeStyles((theme) => ({
         display: 'none',
       },
     },
-    toolbar: theme.mixins.toolbar,
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
     title: {
       flexGrow: 1
-    },
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    modalPaper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-    logo: {
-      width: 50
     }
-}));
+}))

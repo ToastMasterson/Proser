@@ -14,8 +14,7 @@ const Title = ({initialTitle}) => {
             id="Title"
             html={title}
             tagName="h1"
-            style={{outline: '0px solid transparent'}}
-        />
+            style={{outline: '0px solid transparent'}} />
     )
 }
 
