@@ -1,6 +1,6 @@
 import React from 'react'
-import { withRouter } from 'react-router'
-import { Accounts } from 'meteor/accounts-base'
+import { withRouter } from 'react-router-dom'
+import { Meteor } from 'meteor/meteor'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
@@ -51,20 +51,20 @@ const Signup = (props) => {
 
     const handleSignUp = (values) => {
         event.preventDefault()
-        Accounts.createUser({
-            email: values.email,
-            password: values.password,
-            createdAt: new Date(),
-            profile: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                avatar: ''
-            }
-        }, error => {
-            if (error) {
+        Meteor.call('user.register', values, (error, result) => {
+            if (error !== undefined) {
+                console.log('here')
                 props.errorAlert(error.reason)
             } else {
-                props.history.push('/')
+                console.log(result)
+                Meteor.loginWithPassword({id: result}, values.password, (error) => {
+                    if (error !== undefined) {
+                        props.errorAlert(error.reason)
+                    } else {
+                        props.history.push('/')
+                    }
+                })
+                
             }
         })
     }

@@ -1,6 +1,2 @@
-import { Meteor } from 'meteor/meteor';
-import { Notes } from '../imports/api/notes/notePublications'
-
-Meteor.startup(() => {
-
-});
+import '../imports/startup/server'
+import '../imports/startup/both'

@@ -6,5 +6,18 @@ export const sidebarStyles = makeStyles((theme) => ({
     },
     tabs: {
         marginTop: 30
+    },
+    addButton: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '10px',
+        marginBottom: '10px'
+    },
+    subList: {
+        marginLeft: 10
+    },
+    subListSubheader: {
+        display: 'flex',
+        justifyContent: 'flex-end'
     }
 }))

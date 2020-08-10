@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 import { Meteor } from 'meteor/meteor'
 
-import { Notes } from '../../api/notes/notePublications'
-import {accountContainer} from '../containers/accountContainer'
+import { Notes } from '../../api/notes/notes'
+
 import ConfirmDelete from './modals/ConfirmDelete'
 
 import Button from '@material-ui/core/Button'
@@ -15,7 +15,7 @@ import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone'
 
 import { appbarStyles } from '../stylesheets/appbar'
 
-const Navbar = accountContainer((props) => {
+const Navbar = (props) => {
     
     const classes = appbarStyles()
 
@@ -132,7 +132,7 @@ const Navbar = accountContainer((props) => {
                     <Button onClick={(event) => handleClick(event, 'user')}>
                         <AccountCircleTwoToneIcon style={{marginRight: 5}} />
                         <Hidden smDown>
-                            {props.account.user.profile.firstName[0] + '. ' + props.account.user.profile.lastName}
+                            {props.user.profile.firstName[0] + '. ' + props.user.profile.lastName}
                         </Hidden>
                     </Button>
                 </ButtonGroup>
@@ -168,6 +168,6 @@ const Navbar = accountContainer((props) => {
             </Toolbar>
         </AppBar>
     )
-})
+}
 
 export default withRouter(Navbar)

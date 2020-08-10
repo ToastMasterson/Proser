@@ -19,6 +19,7 @@
     "bootstrap": "^4.5.0",
     "fontsource-roboto": "^2.1.4",
     "formik": "^2.1.4",
+    "history": "^5.0.0",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.0",
     "react": "^16.13.0",
@@ -34,7 +35,7 @@
   },
   "meteor": {
     "mainModule": {
-      "client": "client/main.jsx",
+      "client": "client/main.js",
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"

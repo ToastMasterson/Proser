@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
-import { noteHelper } from '../../../helpers/noteHelper'
-import { accountContainer } from '../../containers/accountContainer'
+import { Meteor } from 'meteor/meteor'
+
 import { checkTool } from '../../../helpers/toolHelper'
 
 import Title from '../Title'
@@ -14,48 +14,86 @@ import { Hidden, Drawer } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { mainStyles } from '../../stylesheets/main'
 
-const defaultNote = {
-    _id: null,
-    title: "Title",
-    content: ""
-}
-
-const Main = accountContainer(({account, window}) => {
+const Main = ({ notebooks, notes, user, window }) => {
 
     const classes = mainStyles()
     const theme = useTheme()
 
+    const defaultNote = {
+        _id: null,
+        title: "Title",
+        content: "",
+        notebookId: notebooks[0]
+    }
+
     const [state, setState] = useState({
         toolType: "",
-        notes: account.notes,
-        currentNote: account.notes[0] || defaultNote,
+        notes: notes,
+        notebooks: notebooks,
+        currentNotebook: notebooks[0],
+        currentNote: notes[0] || defaultNote,
         mobileOpen: false
     })
 
     useEffect(() => {
         setState({
-            notes: account.notes,
-            currentNote: account.notes[0] || defaultNote
+            notes: notes,
+            notebooks: notebooks,
+            currentNote: notes[0] || defaultNote,
+            currentNotebook: notebooks[0]
         })
-    }, [account.notes])
+    }, [notes])
 
 
     const saveFile = () => {
-        const currentNote = {
-            id: state.currentNote._id,
-            title: document.getElementById("Title").innerText,
-            content: document.getElementsByClassName("ql-editor")[0].innerHTML,
-            author: account.userId
+        if (state.currentNote._id !== null) {
+            const currentNote = {
+                id: state.currentNote._id,
+                title: document.getElementById("Title").innerText,
+                content: document.getElementsByClassName("ql-editor")[0].innerHTML,
+                notebookId: state.currentNotebook._id
+            }
+            Meteor.call('notes.updateNote', currentNote, (error, result) => {
+                if (error !== undefined) {
+                    console.log(error)
+                } else {
+                    console.log(result)
+                }
+            })
+        } else {
+            const currentNote = {
+                title: document.getElementById("Title").innerText,
+                content: document.getElementsByClassName("ql-editor")[0].innerHTML,
+                notebookId: state.currentNotebook._id
+            }
+            Meteor.call('notes.createNewNote', currentNote, (error, result) => {
+                if (error !== undefined) {
+                    console.log(error)
+                } else {
+                    console.log(result)
+                }
+            })
         }
-        noteHelper(currentNote)
+        
+        
     }
 
     const newFile = () => {
-        setState({...state, currentNote: defaultNote})
+        const fileTemplate = {
+            _id: null,
+            title: "Title",
+            content: "",
+            notebookId: state.currentNotebook._id
+        }
+        setState({...state, currentNote: fileTemplate})
     }
 
     const handleNotes = (note) => {
         setState({...state, currentNote: note, mobileOpen: false})
+    }
+
+    const handleNotebooks = (notebook) => {
+        setState({ ...state, currentNotebook: notebook, mobileOpen: false})
     }
     
     const handleTools = (toolType) => {
@@ -75,6 +113,7 @@ const Main = accountContainer(({account, window}) => {
     return ( 
         <Container className={classes.Main} maxWidth="xl">
             <Navbar 
+                user={user}
                 handleDrawerToggle={handleDrawerToggle} 
                 handleTools={handleTools} 
                 saveFile={saveFile} 
@@ -90,12 +129,24 @@ const Main = accountContainer(({account, window}) => {
                         onClose={handleDrawerToggle}
                         classes={{paper: classes.drawerPaper}}
                         ModalProps={{keepMounted: true}}>
-                        <Sidebar notes={state.notes} handleNotes={handleNotes}/>
+                        <Sidebar 
+                            notebooks={state.notebooks} 
+                            currentNote={state.currentNote}
+                            currentNotebook={state.currentNotebook}
+                            handleNotes={handleNotes} 
+                            handleNotebooks={handleNotebooks}
+                            newFile={newFile} />
                     </Drawer>
                 </Hidden>
                 <Hidden smDown>
                     <Drawer variant="permanent" open classes={{paper: classes.drawerPaper}}>
-                        <Sidebar notes={state.notes} handleNotes={handleNotes}/>
+                        <Sidebar 
+                            notebooks={state.notebooks} 
+                            currentNote={state.currentNote}
+                            currentNotebook={state.currentNotebook}
+                            handleNotes={handleNotes} 
+                            handleNotebooks={handleNotebooks}
+                            newFile={newFile} />
                     </Drawer>
                 </Hidden>
             </nav>
@@ -108,6 +159,6 @@ const Main = accountContainer(({account, window}) => {
             </main>
         </Container>
     )
-})
+}
 
 export default Main

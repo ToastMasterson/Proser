@@ -1,14 +1,9 @@
 import { Mongo } from 'meteor/mongo'
-import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
+import { Meteor } from 'meteor/meteor'
+import { Notes } from '../notes/notes'
 
 export const Notebooks = new Mongo.Collection('notebooks')
-
-if (Meteor.isServer) {
-    Meteor.publish('notebooks', function notebooksPublication() {
-        return Notebooks.find()
-    })
-}
 
 const NotebooksSchema = new SimpleSchema({
     title: {
@@ -18,9 +13,6 @@ const NotebooksSchema = new SimpleSchema({
     author: {
         type: String,
         label: "Author",
-        autoValue: function() {
-            return this.userId
-        }
     },
     createdAt: {
         type: Date,
@@ -36,3 +28,9 @@ const NotebooksSchema = new SimpleSchema({
 })
 
 Notebooks.attachSchema(NotebooksSchema)
+
+Notebooks.helpers({
+    notes(){
+        return Notes.find({ notebookId: this._id})
+    }
+})

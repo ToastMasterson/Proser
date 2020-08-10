@@ -1,4 +1,4 @@
-import { Notes } from '../api/notes/notePublications'
+import { Notes } from '../api/notes/notes'
 
 export const noteHelper = async (currentNote) => {
 

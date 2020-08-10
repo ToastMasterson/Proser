@@ -1,5 +1,5 @@
-import { Notes } from './notePublications'
-import { Notebooks } from '../notebooks/notebookPublications'
+import { Notes } from './notes'
+import { Notebooks } from '../notebooks/notebooks'
 
 Notes.addLinks({
     notebook: {
