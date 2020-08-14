@@ -18,25 +18,25 @@ const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
             BackdropComponent={Backdrop}
             BackdropProps={{timeout: 500}}
             className={classes.modal}>
-        <Fade in={show}>
-            <div className={classes.modalPaper}>
-                <Typography variant="h5" gutterBottom>
-                    Confirm Deletion
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    Once you delete this note it cannot be recovered.
-                </Typography>
-                <div className={classes.deleteButtons}>
-                    <Button variant="contained" onClick={handleModalClose}>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" style={{backgroundColor: "#d32f2f"}} onClick={handleDelete}>
-                        Delete Note
-                    </Button>
+            <Fade in={show}>
+                <div className={classes.modalPaper}>
+                    <Typography variant='h5' gutterBottom>
+                        Confirm Deletion
+                    </Typography>
+                    <Typography variant='body1' gutterBottom>
+                        Once you delete this note it cannot be recovered.
+                    </Typography>
+                    <div className={classes.deleteButtons}>
+                        <Button variant='contained' onClick={handleModalClose}>
+                            Cancel
+                        </Button>
+                        <Button variant='contained' style={{ backgroundColor: '#d32f2f' }} onClick={handleDelete}>
+                            Delete Note
+                        </Button>
+                    </div>
                 </div>
-            </div>
-        </Fade>
-    </Modal>
+            </Fade>
+        </Modal>
    )
 }
 

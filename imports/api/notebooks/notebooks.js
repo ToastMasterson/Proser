@@ -1,26 +1,26 @@
 import { Mongo } from 'meteor/mongo'
 import SimpleSchema from 'simpl-schema'
-import { Meteor } from 'meteor/meteor'
 import { Notes } from '../notes/notes'
 
 export const Notebooks = new Mongo.Collection('notebooks')
 
 const NotebooksSchema = new SimpleSchema({
+
     title: {
         type: String,
-        label: "Title"
+        label: 'Title'
     },
     author: {
         type: String,
-        label: "Author",
+        label: 'Author',
     },
     createdAt: {
         type: Date,
-        label: "Created At"
+        label: 'Created At'
     },
     updatedAt: {
         type: Date,
-        label: "Updated At",
+        label: 'Updated At',
         autoValue: function() {
             return new Date()
         }
@@ -30,6 +30,7 @@ const NotebooksSchema = new SimpleSchema({
 Notebooks.attachSchema(NotebooksSchema)
 
 Notebooks.helpers({
+
     notes(){
         return Notes.find({ notebookId: this._id})
     }

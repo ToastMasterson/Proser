@@ -1,7 +1,5 @@
 import React from 'react'
-
 import { Meteor } from 'meteor/meteor'
-
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 
@@ -10,9 +8,9 @@ import Backdrop from '@material-ui/core/Backdrop'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Fade from '@material-ui/core/Fade'
+import Form from 'react-bootstrap/Form'
 
 import { modalStyles } from '../../stylesheets/modal'
-import Form from 'react-bootstrap/Form'
 
 const addNotebookSchema = Yup.object({
     title: Yup.string()
@@ -30,9 +28,10 @@ const AddNotebook = ({show, handleModalClose}) => {
     
     const handleAddNotebook = (values) => {
         event.preventDefault()
-        console.log(values)
+
         Meteor.call('notebooks.addNewNotebook', values, (error, response) => {
             if (error !== undefined) {
+                //ADD ALERTS HERE
                 console.log(error)
             } else {
                 console.log(response)
@@ -51,7 +50,10 @@ const AddNotebook = ({show, handleModalClose}) => {
             <Fade in={show}>
                 <div className={classes.modalPaper}>
                     <Typography variant='h3'>Add a new notebook</Typography>
-                    <Formik validationSchema={addNotebookSchema} onSubmit={values => handleAddNotebook(values)} initialValues={initialValues}>
+                    <Formik 
+                        validationSchema={addNotebookSchema} 
+                        onSubmit={values => handleAddNotebook(values)} 
+                        initialValues={initialValues} >
                         {({ handleSubmit, handleChange, touched, errors, isValid, values }) => (
                             <Form noValidate onSubmit={handleSubmit}>
                                 <Form.Group controlId='title'>
@@ -63,7 +65,9 @@ const AddNotebook = ({show, handleModalClose}) => {
                                         type='text'
                                         placeholder='New Notebook'
                                         onChange={handleChange} />
-                                        { errors.title && touched.title ? (<div className="formError">*** {errors.title} ***</div>) : null }
+                                        { errors.title && touched.title 
+                                            ? ( <div className='formError'> *** {errors.title} *** </div> ) : null 
+                                        }
                                 </Form.Group>
                                 <Button type='submit'>Add Notebook</Button>
                             </Form>

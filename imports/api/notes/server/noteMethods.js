@@ -3,6 +3,7 @@ import { Notes } from '../notes'
 import { Notebooks } from '../../notebooks/notebooks'
 
 Meteor.methods({
+
     'notes.createNewNote' (currentNote) {
         
         const newNote = Notes.insert({
@@ -14,19 +15,17 @@ Meteor.methods({
             updatedAt: new Date()
         }, (error, result) => {
             if (error !== undefined) {
-                console.log(error, 'noteCreateError')
+                console.log('notes.createNewNote: Error', error)
             } else {
-                console.log(result, 'noteCreateResult')
+                console.log('notes.createNewNote: Success', result)
                 return result
             }
         })
-        console.log(newNote, 'newNote')
 
         return newNote
     },
 
     'notes.updateNote' (currentNote) {
-        console.log(currentNote)
 
         const noteForReturn = Notes.update(
             { _id: currentNote.id }, 
@@ -37,37 +36,25 @@ Meteor.methods({
             }
         }, (error, result) => {
             if (error) {
-                console.log(error, 'error')
+                console.log('notes.updateNote: Error', error)
             } else {
-                console.log(result, 'updateResult')
-                Notebooks.update({ 
-                    _id: currentNote.notebookId 
-                }, { $set: { updatedAt: new Date() }
-                }, (error, result) => {
-                    if (error) {
-                        console.log(error, 'notebookUpdate')
-                    } else {
-                        console.log(result, 'notebookUpdate')
+                console.log('notes.updateNote: Success', result)
+
+                Notebooks.update(
+                    { _id: currentNote.notebookId }, 
+                    { $set: { updatedAt: new Date() } }, (error, result) => {
+                        if (error) {
+                            console.log('notes.updateNote.updateNotebook: Error', error)
+                        } else {
+                            console.log('notes.updateNote.updateNotebook: Error', result)
+                        }
                     }
-                })
+                )
+
                 return result
             }
         })
 
-        console.log(noteForReturn)
-
         return noteForReturn
-    },
-
-    // 'notes.getUserNotes' () {
-    //     const notes = Notes.createQuery({
-    //         $options: {
-    //             sort: {updatedAt: -1}
-    //         },
-    //         author: this.userId,
-    //         // notebooks: {}
-    //     })
-
-    //     return notes.fetch()
-    // }
+    }
 })

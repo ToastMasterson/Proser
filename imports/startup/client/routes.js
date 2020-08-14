@@ -10,8 +10,8 @@ Meteor.startup(() => {
     render (
         <Router>
             <Switch>
-                <Route exact path="/" component={App} />
-                <Route path="landing" component={Landing} />
+                <Route exact path='/' component={App} />
+                <Route path='landing' component={Landing} />
             </Switch>
         </Router>, 
         document.getElementById('react-target'))

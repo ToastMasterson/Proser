@@ -37,7 +37,7 @@ const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleNo
     const checkNotes = () => {
         return notebooks.length > 0
             ? 
-            <List component="nav" >
+            <List component='nav' >
                 {notebooks.map(notebook => (
                     <div key={notebook._id}>
                     <ListItem button 
@@ -53,9 +53,9 @@ const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleNo
                             component='div' 
                             disablePadding 
                             subheader={
-                                <ListSubheader className={classes.subListSubheader} disableGutter component="div">
+                                <ListSubheader className={classes.subListSubheader} disableGutter component='div'>
                                     <Button 
-                                        size="small"  
+                                        size='small'  
                                         onClick={newFile}
                                         endIcon={ <AddCircleIcon /> } >
                                         Add Note
@@ -79,13 +79,13 @@ const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleNo
 
     return (
         <div className={classes.tabs}>
-            <Typography variant="h5" align="center" gutterBottom>Your Notebooks</Typography>
+            <Typography variant='h5' align='center' gutterBottom>Your Notebooks</Typography>
             <Divider />
             <div className={classes.addButton}>
                 <Button 
-                size="small" 
-                variant="contained" 
-                color="primary" 
+                size='small' 
+                variant='contained' 
+                color='primary' 
                 endIcon={<AddCircleIcon />} 
                 onClick={handleAddNotebook}>
                     Add Notebook

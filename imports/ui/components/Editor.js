@@ -25,8 +25,8 @@ const Editor = ({ initialContent }) => {
     
     return (
         <ReactQuill 
-            id="Quill" 
-            theme="snow" 
+            id='Quill' 
+            theme='snow' 
             modules={modules} 
             value={content}  
             style={{height: '100vh'}} 

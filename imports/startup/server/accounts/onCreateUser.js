@@ -13,9 +13,9 @@ Accounts.onCreateUser((options, user) => {
 
     Meteor.call('notebooks.createNotebookForUser', userToCreate._id, (error, response) => {
         if (error !== undefined) {
-            console.log(error, 'meteorcallerror')
+            console.log('notebooks.createNotebookForUser: Error', error)
         } else {
-            console.log(response, 'meteorcallresponse')
+            console.log('notebooks.createNotebookForUser: Success', response)
             return response
         }
     })

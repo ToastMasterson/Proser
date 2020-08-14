@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { Meteor } from 'meteor/meteor'
 
-import { checkTool } from '../../../helpers/toolHelper'
+import { checkTool } from '../helpers/toolHelper'
 
 import Title from '../Title'
 import Navbar from '../Navbar'
@@ -21,13 +21,13 @@ const Main = ({ notebooks, notes, user, window }) => {
 
     const defaultNote = {
         _id: null,
-        title: "Title",
-        content: "",
+        title: 'Title',
+        content: '',
         notebookId: notebooks[0]
     }
 
     const [state, setState] = useState({
-        toolType: "",
+        toolType: '',
         notes: notes,
         notebooks: notebooks,
         currentNotebook: notebooks[0],
@@ -49,8 +49,8 @@ const Main = ({ notebooks, notes, user, window }) => {
         if (state.currentNote._id !== null) {
             const currentNote = {
                 id: state.currentNote._id,
-                title: document.getElementById("Title").innerText,
-                content: document.getElementsByClassName("ql-editor")[0].innerHTML,
+                title: document.getElementById('Title').innerText,
+                content: document.getElementsByClassName('ql-editor')[0].innerHTML,
                 notebookId: state.currentNotebook._id
             }
             Meteor.call('notes.updateNote', currentNote, (error, result) => {
@@ -62,8 +62,8 @@ const Main = ({ notebooks, notes, user, window }) => {
             })
         } else {
             const currentNote = {
-                title: document.getElementById("Title").innerText,
-                content: document.getElementsByClassName("ql-editor")[0].innerHTML,
+                title: document.getElementById('Title').innerText,
+                content: document.getElementsByClassName('ql-editor')[0].innerHTML,
                 notebookId: state.currentNotebook._id
             }
             Meteor.call('notes.createNewNote', currentNote, (error, result) => {
@@ -81,8 +81,8 @@ const Main = ({ notebooks, notes, user, window }) => {
     const newFile = () => {
         const fileTemplate = {
             _id: null,
-            title: "Title",
-            content: "",
+            title: 'Title',
+            content: '',
             notebookId: state.currentNotebook._id
         }
         setState({...state, currentNote: fileTemplate})
@@ -111,7 +111,7 @@ const Main = ({ notebooks, notes, user, window }) => {
     const container = window !== undefined ? () => window().document.body : undefined
 
     return ( 
-        <Container className={classes.Main} maxWidth="xl">
+        <Container className={classes.Main} maxWidth='xl'>
             <Navbar 
                 user={user}
                 handleDrawerToggle={handleDrawerToggle} 
@@ -119,11 +119,11 @@ const Main = ({ notebooks, notes, user, window }) => {
                 saveFile={saveFile} 
                 newFile={newFile} 
                 currentNote={state.currentNote._id}/>
-            <nav className={classes.drawer} aria-label="note list">
-                <Hidden mdUp implementation="css">
+            <nav className={classes.drawer} aria-label='note list'>
+                <Hidden mdUp implementation='css'>
                     <Drawer
                         container={container}
-                        variant="temporary"
+                        variant='temporary'
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
                         open={state.mobileOpen}
                         onClose={handleDrawerToggle}
@@ -139,7 +139,7 @@ const Main = ({ notebooks, notes, user, window }) => {
                     </Drawer>
                 </Hidden>
                 <Hidden smDown>
-                    <Drawer variant="permanent" open classes={{paper: classes.drawerPaper}}>
+                    <Drawer variant='permanent' open classes={{paper: classes.drawerPaper}}>
                         <Sidebar 
                             notebooks={state.notebooks} 
                             currentNote={state.currentNote}

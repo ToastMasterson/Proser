@@ -28,7 +28,7 @@ const App = ({ loading, notebooks, notes, user }) => {
     }
 
     return (
-        <div id="App">
+        <div id='App'>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 {checkUser()}

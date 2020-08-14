@@ -17,6 +17,7 @@ const Login = (props) => {
 
     const handleLogin = () => {
         event.preventDefault()
+
         Meteor.loginWithPassword(state.email, state.password, error => {
             if (error) {
                 props.errorAlert(error.reason)
@@ -28,18 +29,18 @@ const Login = (props) => {
 
     return (
         <Form onSubmit={handleLogin}>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId='formBasicEmail'>
                 <Form.Label>Email address</Form.Label>
-                <Form.Control required name="email" type="email" placeholder="Enter email" onChange={handleChange} />
-                <Form.Text className="text-muted">
+                <Form.Control required name='email' type='email' placeholder='Enter email' onChange={handleChange} />
+                <Form.Text className='text-muted'>
                     We'll never share your email with anyone else.
                 </Form.Text>
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId='formBasicPassword'>
                 <Form.Label>Password</Form.Label>
-                <Form.Control required name="password" type="password" placeholder="Password" onChange={handleChange} />
+                <Form.Control required name='password' type='password' placeholder='Password' onChange={handleChange} />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant='primary' type='submit'>
                 Log In
             </Button>
         </Form>

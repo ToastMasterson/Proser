@@ -1,5 +1,5 @@
 import React from 'react'
-import ToolForm from "../ui/components/modals/ToolForm"
+import ToolForm from '../modals/ToolForm'
 
 const tools = [
     {

@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor'
 import { Notebooks } from '../notebooks'
 
 Meteor.methods({
+
     'notebooks.createNotebookForUser' (userId) {
-        console.log(userId, 'userId')
         
         const firstNotebook = Notebooks.insert({
             title: 'My First Notebook',
@@ -12,12 +12,13 @@ Meteor.methods({
             updatedAt: new Date()
         }, (error, result) => {
             if (error) {
-                console.log(error, 'createError')
+                console.log('notebooks.createNotebookForUser: Error', error)
             } else {
-                console.log(result, 'createResult')
+                console.log('notebooks.createNotebookForUser: Success', result)
                 return result
             }
         })
+
         return firstNotebook
     },
 
@@ -29,28 +30,12 @@ Meteor.methods({
             updatedAt: new Date()
         }, (error, result) => {
             if (error !== undefined) {
-                console.log(error)
+                console.log('notebooks.addNewNotebook: Error', error)
             } else {
-                console.log(result)
+                console.log('notebooks.addNewNotebook: Success', result)
             }
         })
 
         return newNotebook
-    },
-
-    // 'notebooks.getUserNotebooks' () {
-    //     const notebooks = Notebooks.createQuery({
-    //         $options: {
-    //             sort: {updatedAt: -1}
-    //         },
-    //         author: this.userId,
-    //         notes: {
-
-    //         }
-    //     })
-
-    //     console.log(notebooks.fetch())
-
-    //     return notebooks.fetch()
-    // }
+    }
 })

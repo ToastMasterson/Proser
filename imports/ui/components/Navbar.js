@@ -109,20 +109,20 @@ const Navbar = (props) => {
     }
     
     return (
-        <AppBar position="relative" className={classes.appbar}>
+        <AppBar position='relative' className={classes.appbar}>
             <Toolbar>
                 <Hidden mdUp>
                     <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
+                        color='inherit'
+                        aria-label='open drawer'
+                        edge='start'
                         onClick={props.handleDrawerToggle}
                         className={classes.menuButton}>
                             <MenuIcon />
                     </IconButton>
                 </Hidden>
-                <Typography className={classes.title} variant="h6" noWrap> Proser </Typography>
-                <ButtonGroup variant="text" color="secondary">
+                <Typography className={classes.title} variant='h6' noWrap> Proser </Typography>
+                <ButtonGroup variant='text' color='secondary'>
                     <Button onClick={(event) => handleClick(event, 'file')}>
                         File
                     </Button>

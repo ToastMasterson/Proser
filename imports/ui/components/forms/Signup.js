@@ -53,10 +53,8 @@ const Signup = (props) => {
         event.preventDefault()
         Meteor.call('user.register', values, (error, result) => {
             if (error !== undefined) {
-                console.log('here')
                 props.errorAlert(error.reason)
             } else {
-                console.log(result)
                 Meteor.loginWithPassword({id: result}, values.password, (error) => {
                     if (error !== undefined) {
                         props.errorAlert(error.reason)
@@ -74,71 +72,81 @@ const Signup = (props) => {
             {({ handleSubmit, handleChange, touched, errors, isValid, values }) => (
                 <Form noValidate onSubmit={handleSubmit}>
                     <Form.Row>
-                        <Form.Group as={Col} controlId="firstName">
+                        <Form.Group as={Col} controlId='firstName'>
                             <Form.Label>First Name</Form.Label>
                             <Form.Control 
-                                name="firstName" 
-                                type="text" 
+                                name='firstName' 
+                                type='text' 
                                 value={values.firstName}
-                                placeholder="John" 
+                                placeholder='John' 
                                 onChange={handleChange} 
                                 isValid={touched.firstName && !errors.firstName} />
-                            { errors.firstName && touched.firstName ? (<div className="formError">*** {errors.firstName} ***</div>) : null }
+                            { errors.firstName && touched.firstName 
+                                ? ( <div className='formError'> *** {errors.firstName} *** </div> ) : null 
+                            }
                         </Form.Group>
-                        <Form.Group as={Col} controlId="lastName">
+                        <Form.Group as={Col} controlId='lastName'>
                             <Form.Label>Last Name</Form.Label>
                             <Form.Control 
-                                name="lastName" 
-                                type="text" 
+                                name='lastName' 
+                                type='text' 
                                 value={values.lastName}
-                                placeholder="Snow" 
+                                placeholder='Snow' 
                                 onChange={handleChange}
                                 isValid={touched.lastName && !errors.lastName} />
-                            { errors.lastName && touched.lastName ? (<div className="formError">*** {errors.lastName} ***</div>) : null }
+                            { errors.lastName && touched.lastName 
+                                ? ( <div className='formError'> *** {errors.lastName} *** </div> ) : null 
+                            }
                         </Form.Group>
                     </Form.Row>
-                    <Form.Group controlId="email">
+                    <Form.Group controlId='email'>
                         <Form.Label>Email address</Form.Label>
                         <Form.Control 
-                            name="email" 
-                            type="email" 
+                            name='email' 
+                            type='email' 
                             value={values.email}
-                            placeholder="Enter email" 
+                            placeholder='Enter email' 
                             onChange={handleChange} 
                             isValid={touched.email && !errors.email} />
-                        { errors.email && touched.email ? (<div className="formError">*** {errors.email} ***</div>) : null }
-                        <Form.Text className="text-muted">
+                        { errors.email && touched.email 
+                            ? ( <div className='formError'> *** {errors.email} *** </div> ) : null 
+                        }
+                        <Form.Text className='text-muted'>
                             We'll never share your email with anyone else.
                         </Form.Text>
                     </Form.Group>
                     <Form.Row>
-                        <Form.Group as={Col} controlId="password">
+                        <Form.Group as={Col} controlId='password'>
                             <Form.Label>Password</Form.Label>
                             <Form.Control 
-                                name="password" 
-                                type="password" 
+                                name='password' 
+                                type='password' 
                                 value={values.password}
-                                placeholder="Password" 
+                                placeholder='Password' 
                                 onChange={handleChange} 
                                 isValid={touched.password && !errors.password} />
-                            { errors.password && touched.password ? (<div className="formError">*** {errors.password} ***</div>) : null }
-                            <Form.Text className="text-muted">
+                            { errors.password && touched.password 
+                                ? ( <div className='formError'> *** {errors.password} *** </div> ) : null 
+                            }
+                            <Form.Text className='text-muted'>
                                 Password should be between 8 and 20 characters
                             </Form.Text>
                         </Form.Group>
-                        <Form.Group as={Col} controlId="confirmPassword">
+                        <Form.Group as={Col} controlId='confirmPassword'>
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control 
-                                name="confirmPassword" 
-                                type="password" 
+                                name='confirmPassword' 
+                                type='password' 
                                 value={values.confirmPassword}
-                                placeholder="Re-enter Password" 
+                                placeholder='Re-enter Password' 
                                 onChange={handleChange} 
                                 isValid={touched.confirmPassword && !errors.confirmPassword} />
-                            { errors.confirmPassword && touched.confirmPassword ? (<div className="formError">*** {errors.confirmPassword} ***</div>) : null }
+                            { errors.confirmPassword && touched.confirmPassword 
+                                ? (<div className='formError'> *** {errors.confirmPassword} *** </div>) : null 
+                            }
                         </Form.Group>
                     </Form.Row>
-                    <Button variant="primary" type="submit">
+                    <Button variant='primary' type='submit'>
                         Sign Up
                     </Button>
                 </Form>
