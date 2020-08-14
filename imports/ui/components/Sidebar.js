@@ -53,7 +53,7 @@ const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleNo
                             component='div' 
                             disablePadding 
                             subheader={
-                                <ListSubheader className={classes.subListSubheader} disableGutter component='div'>
+                                <ListSubheader className={classes.subListSubheader} component='div'>
                                     <Button 
                                         size='small'  
                                         onClick={newFile}
