@@ -2,8 +2,12 @@ import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 
+import { Notebooks } from '../api/notebooks/notebooks'
+import { Notes } from '../api/notes/notes'
+
 import Landing from './components/Pages/Landing'
 import Loading from './components/Pages/Loading'
+import Main from './components/Pages/Main'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { ThemeProvider } from '@material-ui/styles'
@@ -11,9 +15,7 @@ import { theme } from './stylesheets/palette'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './stylesheets/app.css'
-import { Notebooks } from '../api/notebooks/notebooks'
-import { Notes } from '../api/notes/notes'
-import Main from './components/Pages/Main'
+import { Container } from '@material-ui/core'
 
 const App = ({ loading, notebooks, notes, user }) => {
 
@@ -31,7 +33,9 @@ const App = ({ loading, notebooks, notes, user }) => {
         <div id='App'>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                {checkUser()}
+                <Container maxWidth='xl'>
+                    {checkUser()}
+                </Container>
             </ThemeProvider>
         </div>
     )
