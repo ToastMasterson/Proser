@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Paper, Typography, Tabs, Tab } from '@material-ui/core'
+import { Paper, Typography, Tabs, Tab, Snackbar, IconButton } from '@material-ui/core'
+import MuiAlert from '@material-ui/lab/Alert'
+import CloseIcon from '@material-ui/icons/Close'
 
 import Signup from '../forms/Signup'
 import Login from '../forms/Login'
@@ -7,9 +9,9 @@ import { landingStyles } from '../../stylesheets/landing'
 
 const Landing = () => {
 
-    const [option, setOption] = useState(true)
-    const [error, setError] = useState('')
+    const [error, setError] = useState("")
     const [value, setValue] = useState(0)
+    const [open, setOpen] = useState(false)
     
     const classes = landingStyles()
 
@@ -17,12 +19,13 @@ const Landing = () => {
         setValue(newValue)
     }
 
-    const errorAlert = (error) => {
-        setError(error)
+    const errorAlert = (errorMessage) => {
+        setError(errorMessage)
+        setOpen(true)
     }
 
     const handleClose = () => {
-        setError('')
+        setOpen(false)
     }
 
     const checkOption = () => {
@@ -32,17 +35,6 @@ const Landing = () => {
 
         return <Login errorAlert={errorAlert} />
     }
-
-    // const checkError = () => {
-    //     if (error !== '') {
-    //         return (
-    //             <Alert variant='danger' onClose={handleClose} dismissible>
-    //                 <Alert.Heading>Whoops!</Alert.Heading>
-    //                 <p>{error}</p>
-    //             </Alert>
-    //         )
-    //     }
-    // }
 
     return (
         <div className={classes.landing}>
@@ -59,6 +51,21 @@ const Landing = () => {
                 </Tabs>
                 {checkOption()}
             </Paper>
+            <Snackbar
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+                }}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose} >
+                <MuiAlert variant='filled' severity='error'>
+                    {error}
+                    <IconButton size="small" color="inherit" onClick={handleClose}>
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                </MuiAlert>
+            </Snackbar>
         </div>
     )
 }

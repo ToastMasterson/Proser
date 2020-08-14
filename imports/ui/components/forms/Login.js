@@ -31,10 +31,6 @@ const Login = (props) => {
         password: ''
     }
 
-    // const handleChange = () => {
-    //     setState({...state, [event.target.name]: event.target.value})
-    // }
-
     const handleLogin = (values) => {
         event.preventDefault()
 
