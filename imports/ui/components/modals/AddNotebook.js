@@ -22,7 +22,7 @@ const addNotebookSchema = Yup.object({
         .required('This field is required')
 })
 
-const AddNotebook = ({show, handleModalClose}) => {
+const AddNotebook = ({show, handleAlert, handleModalClose}) => {
     const classes = modalStyles()
 
     const initialValues = {
@@ -34,10 +34,9 @@ const AddNotebook = ({show, handleModalClose}) => {
 
         Meteor.call('notebooks.addNewNotebook', values, (error, response) => {
             if (error !== undefined) {
-                //ADD ALERTS HERE
-                console.log(error)
+                handleAlert(false, error.reason)
             } else {
-                console.log(response)
+                handleAlert(true, 'Notebook Added')
             }
         })
 

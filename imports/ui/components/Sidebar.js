@@ -10,7 +10,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore'
 import { sidebarStyles } from '../stylesheets/sidebar'
 import AddNotebook from './modals/AddNotebook'
 
-const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleNotebooks, newFile}) => {
+const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleAlert, handleNotebooks, newFile}) => {
 
     const classes = sidebarStyles()
 
@@ -93,7 +93,7 @@ const Sidebar = ({notebooks, currentNotebook, currentNote, handleNotes, handleNo
             </div>
             <Divider />
             {checkNotes()}
-            <AddNotebook show={show} handleModalClose={handleModalClose} />
+            <AddNotebook show={show} handleAlert={handleAlert} handleModalClose={handleModalClose} />
         </div>
     )
 }

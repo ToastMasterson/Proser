@@ -136,6 +136,7 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
                             currentNotebook={state.currentNotebook}
                             handleNotes={handleNotes} 
                             handleNotebooks={handleNotebooks}
+                            handleAlert={handleAlert}
                             newFile={newFile} />
                     </Drawer>
                 </Hidden>
@@ -147,6 +148,7 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
                             currentNotebook={state.currentNotebook}
                             handleNotes={handleNotes} 
                             handleNotebooks={handleNotebooks}
+                            handleAlert={handleAlert}
                             newFile={newFile} />
                     </Drawer>
                 </Hidden>
