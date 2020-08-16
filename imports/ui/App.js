@@ -78,7 +78,7 @@ const userContainer = withTracker((props) => {
     return {
         loading: !userHandle.ready() || !noteHandle.ready() || !notebookHandle.ready(),
         notebooks: notebooks,
-        notes: Notes.find().fetch(),
+        notes: Notes.find({}, {sort: { updatedAt: -1 }}).fetch(),
         user: Meteor.users.findOne(Meteor.userId())
     }
 })(App)
