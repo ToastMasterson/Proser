@@ -57,14 +57,15 @@ const Signup = (props) => {
         event.preventDefault()
         Meteor.call('user.register', values, (error, result) => {
             if (error !== undefined) {
-                props.errorAlert(error.reason)
+                props.handleAlert(false, error.reason)
                 setLoading(false)
             } else {
                 Meteor.loginWithPassword({id: result}, values.password, (error) => {
                     if (error !== undefined) {
-                        props.errorAlert(error.reason)
+                        props.handleAlert(false, error.reason)
                         setLoading(false)
                     } else {
+                        props.handleAlert(true, 'Registration Successful')
                         props.history.push('/')
                     }
                 })

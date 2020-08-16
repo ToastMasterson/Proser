@@ -7,11 +7,9 @@ import Signup from '../forms/Signup'
 import Login from '../forms/Login'
 import { landingStyles } from '../../stylesheets/landing'
 
-const Landing = () => {
+const Landing = ({ handleAlert }) => {
 
-    const [error, setError] = useState("")
     const [value, setValue] = useState(0)
-    const [open, setOpen] = useState(false)
     
     const classes = landingStyles()
 
@@ -19,21 +17,12 @@ const Landing = () => {
         setValue(newValue)
     }
 
-    const errorAlert = (errorMessage) => {
-        setError(errorMessage)
-        setOpen(true)
-    }
-
-    const handleClose = () => {
-        setOpen(false)
-    }
-
     const checkOption = () => {
         if (value === 1) {
-            return <Signup errorAlert={errorAlert} />
+            return <Signup handleAlert={handleAlert} />
         }
 
-        return <Login errorAlert={errorAlert} />
+        return <Login handleAlert={handleAlert} />
     }
 
     return (
@@ -51,21 +40,6 @@ const Landing = () => {
                 </Tabs>
                 {checkOption()}
             </Paper>
-            <Snackbar
-                anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'center',
-                }}
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose} >
-                <MuiAlert variant='filled' severity='error'>
-                    {error}
-                    <IconButton size="small" color="inherit" onClick={handleClose}>
-                        <CloseIcon fontSize="small" />
-                    </IconButton>
-                </MuiAlert>
-            </Snackbar>
         </div>
     )
 }

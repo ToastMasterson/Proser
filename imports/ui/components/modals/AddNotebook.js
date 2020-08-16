@@ -1,14 +1,17 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
-import { Formik } from 'formik'
+
 import * as Yup from 'yup'
+
+import { Formik, Form, Field } from 'formik'
+import { TextField } from 'formik-material-ui'
 
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Fade from '@material-ui/core/Fade'
-import Form from 'react-bootstrap/Form'
+
 
 import { modalStyles } from '../../stylesheets/modal'
 
@@ -54,21 +57,17 @@ const AddNotebook = ({show, handleModalClose}) => {
                         validationSchema={addNotebookSchema} 
                         onSubmit={values => handleAddNotebook(values)} 
                         initialValues={initialValues} >
-                        {({ handleSubmit, handleChange, touched, errors, isValid, values }) => (
-                            <Form noValidate onSubmit={handleSubmit}>
-                                <Form.Group controlId='title'>
-                                    <Form.Label>Title</Form.Label>
-                                    <Form.Control 
-                                        name='title' 
-                                        value={values.title}
-                                        isValid={touched.title && !errors.title}
-                                        type='text'
-                                        placeholder='New Notebook'
-                                        onChange={handleChange} />
-                                        { errors.title && touched.title 
-                                            ? ( <div className='formError'> *** {errors.title} *** </div> ) : null 
-                                        }
-                                </Form.Group>
+                        {({ submitForm }) => (
+                            <Form onSubmit={submitForm}>
+                                <Field 
+                                    component={TextField}
+                                    className={classes.textField}
+                                    name='title' 
+                                    label='Title'
+                                    type='text'
+                                    variant='outlined'
+                                    fullWidth
+                                    placeholder='New Notebook' />
                                 <Button type='submit'>Add Notebook</Button>
                             </Form>
                         )}

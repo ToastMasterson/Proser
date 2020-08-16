@@ -43,8 +43,9 @@ const Navbar = (props) => {
     const handleSignout = () => {
         Meteor.logout(error => {
             if (error) {
-                console.log(error.reason)
+                props.handleAlert(false, error.reason)
             } else {
+                props.handleAlert(true, 'Signout Successful')
                 props.history.push('/')
             }
         })
@@ -101,8 +102,9 @@ const Navbar = (props) => {
     const handleDelete = () => {
         Notes.remove({ _id: props.currentNote }, error => {
             if (error) {
-                console.log(error.reason)
+                props.handleAlert(false, error.reason)
             } else {
+                props.handleAlert(true, 'Note Deleted')
                 handleModalClose()
             }
         })

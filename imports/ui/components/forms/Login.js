@@ -36,9 +36,10 @@ const Login = (props) => {
 
         Meteor.loginWithPassword(values.email, values.password, error => {
             if (error) {
-                props.errorAlert(error.reason)
+                props.handleAlert(false, error.reason)
                 setLoading(false)
             } else {
+                props.handleAlert(true, 'Login Successful')
                 props.history.push('/')
             }
         })

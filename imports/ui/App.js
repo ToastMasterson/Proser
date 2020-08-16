@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Meteor } from 'meteor/meteor'
 import { withTracker } from 'meteor/react-meteor-data'
 
@@ -16,16 +16,35 @@ import { theme } from './stylesheets/palette'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './stylesheets/app.css'
 import { Container } from '@material-ui/core'
+import { Alert } from './components/Alert'
 
 const App = ({ loading, notebooks, notes, user }) => {
 
+    const [state, setState] = useState({
+        open: false,
+        isSuccess: true,
+        message: ''
+    })
+
+    const handleAlert = (isSuccess, message) => {
+        setState({
+            open: true,
+            isSuccess,
+            message
+        })
+    }
+
+    const handleClose = () => {
+        setState({...state, open: false })
+    }
+
     const checkUser = () => {
         if (Meteor.user() === null) {
-            return <Landing />
+            return <Landing handleAlert={handleAlert} />
         } else if (loading) {
             return <Loading />
         } else {
-            return <Main notebooks={notebooks} notes={notes} user={user}/>
+            return <Main notebooks={notebooks} notes={notes} user={user} handleAlert={handleAlert} />
         }
     }
 
@@ -35,6 +54,7 @@ const App = ({ loading, notebooks, notes, user }) => {
                 <CssBaseline />
                 <Container maxWidth='xl'>
                     {checkUser()}
+                    <Alert open={state.open} handleClose={handleClose} isSuccess={state.isSuccess} message={state.message} />
                 </Container>
             </ThemeProvider>
         </div>

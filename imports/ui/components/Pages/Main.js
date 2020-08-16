@@ -14,7 +14,7 @@ import { Hidden, Drawer } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { mainStyles } from '../../stylesheets/main'
 
-const Main = ({ notebooks, notes, user, window }) => {
+const Main = ({ handleAlert, notebooks, notes, user, window }) => {
 
     const classes = mainStyles()
     const theme = useTheme()
@@ -55,9 +55,9 @@ const Main = ({ notebooks, notes, user, window }) => {
             }
             Meteor.call('notes.updateNote', currentNote, (error, result) => {
                 if (error !== undefined) {
-                    console.log(error)
+                    handleAlert(false, error.reason)
                 } else {
-                    console.log(result)
+                    handleAlert(true, 'Note Saved')
                 }
             })
         } else {
@@ -68,9 +68,9 @@ const Main = ({ notebooks, notes, user, window }) => {
             }
             Meteor.call('notes.createNewNote', currentNote, (error, result) => {
                 if (error !== undefined) {
-                    console.log(error)
+                    handleAlert(false, error.reason)
                 } else {
-                    console.log(result)
+                    handleAlert(true, 'Note Saved')
                 }
             })
         }
@@ -118,6 +118,7 @@ const Main = ({ notebooks, notes, user, window }) => {
                 handleTools={handleTools} 
                 saveFile={saveFile} 
                 newFile={newFile} 
+                handleAlert={handleAlert}
                 currentNote={state.currentNote._id}/>
             <nav className={classes.drawer} aria-label='note list'>
                 <Hidden mdUp implementation='css'>
