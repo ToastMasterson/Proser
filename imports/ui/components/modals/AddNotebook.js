@@ -39,7 +39,6 @@ const AddNotebook = ({show, handleAlert, handleModalClose}) => {
                 handleAlert(true, 'Notebook Added')
             }
         })
-
     }
 
     return (
@@ -75,7 +74,6 @@ const AddNotebook = ({show, handleAlert, handleModalClose}) => {
             </Fade>
         </Modal>
     )
-    
 }
 
 export default AddNotebook

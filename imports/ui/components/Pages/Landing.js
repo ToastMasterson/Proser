@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Paper, Typography, Tabs, Tab, Snackbar, IconButton } from '@material-ui/core'
-import MuiAlert from '@material-ui/lab/Alert'
-import CloseIcon from '@material-ui/icons/Close'
+import { Paper, Typography, Tabs, Tab } from '@material-ui/core'
 
 import Signup from '../forms/Signup'
 import Login from '../forms/Login'

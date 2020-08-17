@@ -1,18 +1,25 @@
 import React, { useState } from 'react'
 
-import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { DMuse } from '../helpers/dmuse'
 
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button'
-import Container from '@material-ui/core/Container'
-import Modal from '@material-ui/core/Modal'
-import { Backdrop, Fade, Typography, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core'
+import { Formik, Form, Field } from 'formik'
+import { TextField } from 'formik-material-ui'
 
-//REFACTOR IMPORTS
+import { 
+    Button, 
+    Backdrop, 
+    Fade, 
+    Modal, 
+    Grid,
+    Container, 
+    Typography, 
+    Accordion, 
+    AccordionSummary, 
+    AccordionDetails, 
+    RadioGroup,
+    Radio,
+    FormControlLabel} from '@material-ui/core'
 
 import { modalStyles } from '../../stylesheets/modal'
 
@@ -91,82 +98,43 @@ const ToolForm = ({closeTool, tool}) => {
                             validationSchema={ToolFormSchema} 
                             onSubmit={values => handleQuery(values)} 
                             initialValues={initialValues}>
-                            {({ handleSubmit, handleChange, touched, errors, isValid, values }) => (
-                                <Form noValidate onSubmit={handleSubmit}>
-                                    <Form.Group controlId='radio'>
-                                        <Form.Label column sm={4}> Search Type </Form.Label>
-                                        <Row style={{ width: '70%', margin: 'auto' }}>
-                                            <Col>
-                                                <Form.Check inline 
-                                                    type='radio' 
-                                                    value={true}
-                                                    checked={state.searchType === true} 
-                                                    label={tool.options[0]} 
-                                                    onChange={handleRadio} />
-                                                </Col>
-                                            <Col>
-                                                <Form.Check inline 
-                                                    type='radio' 
-                                                    value={false}
-                                                    checked={state.searchType !== true} 
-                                                    label={tool.options[1]} 
-                                                    onChange={handleRadio} />
-                                            </Col>
-                                        </Row>
-                                    </Form.Group>
-                                    <Form.Group controlId='searchWord'>
-                                        <Form.Label column sm={4}>
-                                            { state.searchType === true ? tool.searchPhrases[0] : tool.searchPhrases[1] }
-                                        </Form.Label>
-                                        <Col sm={10} style={{margin: 'auto'}}>
-                                            <Form.Control 
-                                                size='sm' 
-                                                name='searchWordOrPhrase' 
-                                                value={values.searchWordOrPhrase}
-                                                isValid={touched.searchWordOrPhrase && !errors.searchWordOrPhrase}
-                                                type='text' 
-                                                placeholder={state.searchType === true ? tool.placeholder[0] : tool.placeholder[1]} 
-                                                onChange={handleChange} />
-                                            { errors.searchWordOrPhrase && touched.searchWordOrPhrase 
-                                                ? ( <div className='formError'> *** {errors.searchWordOrPhrase} *** </div> ) : null }
-                                        </Col>
-                                    </Form.Group>
-                                    <Form.Group controlId='relationWord'>
-                                            <Form.Label column sm={4}>Relation Word</Form.Label>
-                                            <Col sm={10} style={{margin: 'auto'}}>
-                                                <Form.Control 
-                                                    size='sm' 
-                                                    name='relationWord' 
-                                                    value={values.relationWord}
-                                                    isValid={touched.relationWord && !errors.relationWord}
-                                                    type='text' 
-                                                    placeholder='Relation Word' 
-                                                    onChange={handleChange} />
-                                                { errors.relationWord && touched.relationWord 
-                                                    ? ( <div className='formError'> *** {errors.relationWord} *** </div> ) : null }
-                                                <Form.Text className='text-muted'>
-                                                    Optional relation word to sort results by. Ex. 
-                                                    'Temperature' yields results sorted by relevance to temperature.
-                                                </Form.Text>
-                                            </Col>
-                                        </Form.Group>
-                                    <Form.Group controlId='numberOfResults'>
-                                        <Form.Label column sm={4}>Number of Results</Form.Label>
-                                        <Col sm={10} style={{ margin: 'auto' }}>
-                                            <Form.Control 
-                                                size='sm' 
-                                                name='numberOfResults' 
-                                                value={values.numberOfResults}
-                                                type='number' 
-                                                placeholder='100' 
-                                                onChange={handleChange} />
-                                            { errors.numberOfResults && touched.numberOfResults 
-                                                ? (<div className='formError'>*** {errors.numberOfResults} ***</div>) : null }
-                                        </Col>
-                                    </Form.Group>
-                                    <div style={{ width: '80%', margin: 'auto' }}>
-                                        <Button variant='primary' type='submit' size='sm' block>Submit</Button>
-                                    </div>
+                            {({ submitForm }) => (
+                                <Form>
+                                    <Field component={RadioGroup} name='searchType' onChange={handleRadio}>
+                                        <FormControlLabel
+                                            value={true}
+                                            control={<Radio checked={state.searchType} />}
+                                            label={tool.options[0]}
+                                            labelPlacement='start' />
+                                        <FormControlLabel
+                                            value={false}
+                                            control={<Radio checked={!state.searchType} />}
+                                            label={tool.options[1]}
+                                            labelPlacement='start' />
+                                    </Field>
+                                    <Field
+                                        component={TextField}
+                                        size='small' 
+                                        name='searchWordOrPhrase' 
+                                        label={ state.searchType === true ? tool.searchPhrases[0] : tool.searchPhrases[1] }
+                                        type='text' 
+                                        placeholder={state.searchType === true ? tool.placeholder[0] : tool.placeholder[1]} />
+                                    <Field
+                                        component={TextField}
+                                        size='small' 
+                                        label='Relation Word'
+                                        helperText={`Optional relation word to sort results by. Ex. 'Temperature' yields results sorted by relevance to temperature.`}
+                                        name='relationWord' 
+                                        type='text' 
+                                        placeholder='Relation Word' />
+                                    <Field
+                                        component={TextField}
+                                        label='Number of Results'
+                                        size='small' 
+                                        name='numberOfResults' 
+                                        type='number' 
+                                        placeholder='100' />
+                                    <Button color='primary' variant='contained' type='submit' onClick={submitForm} size='small'>Submit</Button>
                                 </Form>
                             )}
                         </Formik>
