@@ -11,10 +11,11 @@ Meteor.methods({
             content: currentNote.content,
             author: this.userId,
             notebookId: currentNote.notebookId,
+            isDeleted: false,
             createdAt: new Date(),
             updatedAt: new Date()
         }, (error, result) => {
-            if (error !== undefined) {
+            if (error) {
                 console.log('notes.createNewNote: Error', error)
             } else {
                 console.log('notes.createNewNote: Success', result)
@@ -56,5 +57,14 @@ Meteor.methods({
         })
 
         return noteForReturn
+    },
+
+    'notes.emptyTrash' () {
+
+        Notes.remove({ isDeleted: true }, error => {
+            if (error) {
+                console.log(error, 'empty trash')
+            }
+        })
     }
 })

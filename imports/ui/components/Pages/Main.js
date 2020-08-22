@@ -14,7 +14,7 @@ import { Hidden, Drawer } from '@material-ui/core'
 import { useTheme } from '@material-ui/core/styles'
 import { mainStyles } from '../../stylesheets/main'
 
-const Main = ({ handleAlert, notebooks, notes, user, window }) => {
+const Main = ({ handleAlert, notebooks, notes, trash, user, window }) => {
 
     const classes = mainStyles()
     const theme = useTheme()
@@ -30,6 +30,7 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
         toolType: '',
         notes: notes,
         notebooks: notebooks,
+        trash: trash,
         currentNotebook: notebooks[0],
         currentNote: notes[0] || defaultNote,
         mobileOpen: false
@@ -39,6 +40,7 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
         setState({
             notes: notes,
             notebooks: notebooks,
+            trash: trash,
             currentNote: notes[0] || defaultNote,
             currentNotebook: notebooks[0]
         })
@@ -132,6 +134,7 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
                         ModalProps={{keepMounted: true}}>
                         <Sidebar 
                             notebooks={state.notebooks} 
+                            trash={state.trash}
                             currentNote={state.currentNote}
                             currentNotebook={state.currentNotebook}
                             handleNotes={handleNotes} 
@@ -144,6 +147,7 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
                     <Drawer variant='permanent' open classes={{paper: classes.drawerPaper}}>
                         <Sidebar 
                             notebooks={state.notebooks} 
+                            trash={state.trash}
                             currentNote={state.currentNote}
                             currentNotebook={state.currentNotebook}
                             handleNotes={handleNotes} 
@@ -154,11 +158,9 @@ const Main = ({ handleAlert, notebooks, notes, user, window }) => {
                 </Hidden>
             </nav>
             <main className={classes.content}>
-                <div className={classes.toolbar}>
-                    {checkTool(state.toolType, closeTool)}
-                    <Title initialTitle={state.currentNote.title}/>
-                    <Editor initialContent={state.currentNote.content}/>
-                </div>
+                {checkTool(state.toolType, closeTool)}
+                <Title initialTitle={state.currentNote.title} />
+                <Editor initialContent={state.currentNote.content} />
             </main>
         </Container>
     )

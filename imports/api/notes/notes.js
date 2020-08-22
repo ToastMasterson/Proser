@@ -22,7 +22,12 @@ const NotesSchema = new SimpleSchema({
     },
     notebookId: {
         type: String,
-        label: 'Notebook'
+        label: 'Notebook',
+        optional: true
+    },
+    isDeleted: {
+        type: Boolean,
+        label: 'Deleted ?'
     },
     createdAt: {
         type: Date,

@@ -28,3 +28,4 @@ static-html
 random
 mdg:validated-method
 dburles:collection-helpers
+meteortesting:mocha
