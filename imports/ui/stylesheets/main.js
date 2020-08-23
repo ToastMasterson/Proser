@@ -39,7 +39,7 @@ export const mainStyles = makeStyles((theme) => ({
       [theme.breakpoints.up('md')]: {
           marginLeft: drawerWidth
       },
-      height: '90%'
+      height: '80%'
     },
     editor: {
       height: '90%'

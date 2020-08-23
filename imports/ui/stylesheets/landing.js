@@ -31,6 +31,9 @@ export const landingStyles = makeStyles((theme) => ({
     },
     submitButton: {
         marginTop: 10,
+    },
+    title: {
+        fontFamily: 'Poiret One, cursive'
     }
 
 }))

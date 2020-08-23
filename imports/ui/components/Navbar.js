@@ -123,7 +123,7 @@ const Navbar = (props) => {
                             <MenuIcon />
                     </IconButton>
                 </Hidden>
-                <Typography className={classes.title} variant='h6' noWrap> Proser </Typography>
+                <Typography className={classes.title} variant='h3' noWrap> Proser </Typography>
                 <ButtonGroup variant='text' color='secondary'>
                     <Button onClick={(event) => handleClick(event, 'file')}>
                         File
@@ -163,7 +163,7 @@ const Navbar = (props) => {
                     keepMounted
                     open={state.button === 'user'}
                     onClose={handleMenuClose}>
-                    <MenuItem>Settings</MenuItem>
+                    <MenuItem disabled>Settings</MenuItem>
                     <MenuItem onClick={() => handleSelect('signout')}>Sign Out</MenuItem>
                 </DropDown>
                 <ConfirmDelete show={state.show} handleModalClose={handleModalClose} handleDelete={handleDelete} />

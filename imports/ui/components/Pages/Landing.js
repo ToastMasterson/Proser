@@ -26,7 +26,7 @@ const Landing = ({ handleAlert }) => {
     return (
         <div className={classes.landing}>
             <Paper variant='outlined' className={classes.window}>
-                <Typography variant='h3'> Welcome to Proser!</Typography>
+                <Typography variant='h3' className={classes.title}> Welcome to Proser!</Typography>
                 <Tabs 
                     value={value} 
                     onChange={handleChange} 

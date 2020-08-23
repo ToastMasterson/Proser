@@ -9,7 +9,7 @@ export const appbarStyles = makeStyles((theme) => ({
         marginLeft: drawerWidth
       },
       backgroundImage: `url("https://www.photohdx.com/images/2016/02/yellow-brown-leather-texture-background.jpg")`,
-      backgroundSize: 'cover'
+      backgroundSize: 'cover',
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -18,6 +18,7 @@ export const appbarStyles = makeStyles((theme) => ({
       },
     },
     title: {
-      flexGrow: 1
+      flexGrow: 1,
+      fontFamily: 'Poiret One, cursive'
     }
 }))
