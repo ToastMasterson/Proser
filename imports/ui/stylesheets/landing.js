@@ -20,7 +20,6 @@ export const landingStyles = makeStyles((theme) => ({
         '&:focus': {
             outline: 'none',
         },
-        
     },
     login: {},
     signup: {
@@ -35,5 +34,4 @@ export const landingStyles = makeStyles((theme) => ({
     title: {
         fontFamily: 'Poiret One, cursive'
     }
-
 }))
