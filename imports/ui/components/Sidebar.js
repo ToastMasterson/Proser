@@ -206,8 +206,8 @@ const Sidebar = ({notebooks, trash, currentNotebook, currentNote, handleNotes, h
     }
 
     return (
-        <div className={classes.tabs}>
-            <Typography variant='h5' align='center' gutterBottom>Your Notebooks</Typography>
+        <div className={classes.sidebar}>
+            <Typography variant='h5' align='center' className={classes.sidebarHeader}>Your Notebooks</Typography>
             <Divider />
             <div className={classes.addButton}>
                 <Button 

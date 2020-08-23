@@ -31,6 +31,7 @@ export const mainStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
       width: drawerWidth,
+      background: '#eed7c391'
     },
     content: {
       flexGrow: 1,

@@ -44,6 +44,7 @@ const RenameNotebook = ({show, handleModalClose, notebook, handleRenameNotebook}
                                 </Typography>
                                 <Field 
                                     component={TextField} 
+                                    className={classes.textField}
                                     fullWidth 
                                     size='small' 
                                     variant='outlined' 

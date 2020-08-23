@@ -125,6 +125,7 @@ const Main = ({ handleAlert, notebooks, notes, trash, user, window }) => {
             <nav className={classes.drawer} aria-label='note list'>
                 <Hidden mdUp implementation='css'>
                     <Drawer
+                        elevation={3}
                         container={container}
                         variant='temporary'
                         anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -144,7 +145,7 @@ const Main = ({ handleAlert, notebooks, notes, trash, user, window }) => {
                     </Drawer>
                 </Hidden>
                 <Hidden smDown>
-                    <Drawer variant='permanent' open classes={{paper: classes.drawerPaper}}>
+                    <Drawer variant='permanent' open elevation={3} classes={{paper: classes.drawerPaper}}>
                         <Sidebar 
                             notebooks={state.notebooks} 
                             trash={state.trash}

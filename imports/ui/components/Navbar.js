@@ -111,7 +111,7 @@ const Navbar = (props) => {
     }
     
     return (
-        <AppBar position='relative' className={classes.appbar}>
+        <AppBar position='sticky' className={classes.appbar}>
             <Toolbar>
                 <Hidden mdUp>
                     <IconButton

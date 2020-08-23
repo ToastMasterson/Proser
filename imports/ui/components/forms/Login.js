@@ -78,6 +78,7 @@ const Login = (props) => {
                         variant='contained'
                         color='primary'
                         size='large'
+                        type='submit'
                         disabled={loading}
                         onClick={submitForm}>
                             Login

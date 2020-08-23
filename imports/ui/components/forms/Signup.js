@@ -85,7 +85,7 @@ const Signup = (props) => {
             {({ submitForm }) => (
                 <Form className={classes.signup}>
                     <Grid container justify='center'>
-                        <Grid item container justify='space-between'>
+                        <Grid item container spacing={2} justify='space-between'>
                         <Grid item xs={6}>
                             <Field
                                 component={TextField}
@@ -157,6 +157,7 @@ const Signup = (props) => {
                             variant='contained'
                             color='primary'
                             size='large'
+                            type='submit'
                             disabled={loading}
                             onClick={submitForm}>
                             Sign up

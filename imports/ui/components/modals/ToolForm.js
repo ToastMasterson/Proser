@@ -100,48 +100,80 @@ const ToolForm = ({closeTool, tool}) => {
                             initialValues={initialValues}>
                             {({ submitForm }) => (
                                 <Form>
-                                    <Field component={RadioGroup} name='searchType' onChange={handleRadio}>
-                                        <FormControlLabel
-                                            value={true}
-                                            control={<Radio checked={state.searchType} />}
-                                            label={tool.options[0]}
-                                            labelPlacement='start' />
-                                        <FormControlLabel
-                                            value={false}
-                                            control={<Radio checked={!state.searchType} />}
-                                            label={tool.options[1]}
-                                            labelPlacement='start' />
-                                    </Field>
-                                    <Field
-                                        component={TextField}
-                                        size='small' 
-                                        name='searchWordOrPhrase' 
-                                        label={ state.searchType === true ? tool.searchPhrases[0] : tool.searchPhrases[1] }
-                                        type='text' 
-                                        placeholder={state.searchType === true ? tool.placeholder[0] : tool.placeholder[1]} />
-                                    <Field
-                                        component={TextField}
-                                        size='small' 
-                                        label='Relation Word'
-                                        helperText={`Optional relation word to sort results by. Ex. 'Temperature' yields results sorted by relevance to temperature.`}
-                                        name='relationWord' 
-                                        type='text' 
-                                        placeholder='Relation Word' />
-                                    <Field
-                                        component={TextField}
-                                        label='Number of Results'
-                                        size='small' 
-                                        name='numberOfResults' 
-                                        type='number' 
-                                        placeholder='100' />
-                                    <Button color='primary' variant='contained' type='submit' onClick={submitForm} size='small'>Submit</Button>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            <Field component={RadioGroup} className={classes.radios} row name='searchType' onChange={handleRadio}>
+                                                <FormControlLabel
+                                                    value={true}
+                                                    control={<Radio checked={state.searchType} />}
+                                                    label={tool.options[0]}
+                                                    labelPlacement='start' />
+                                                <FormControlLabel
+                                                    value={false}
+                                                    control={<Radio checked={!state.searchType} />}
+                                                    label={tool.options[1]}
+                                                    labelPlacement='start' />
+                                            </Field>
+                                        </Grid>
+                                    <Grid item xs={12}>
+                                        <Field
+                                            component={TextField}
+                                            variant='outlined'
+                                            fullWidth
+                                            className={classes.textField}
+                                            size='small' 
+                                            name='searchWordOrPhrase' 
+                                            label={ state.searchType === true ? tool.searchPhrases[0] : tool.searchPhrases[1] }
+                                            type='text' 
+                                            placeholder={state.searchType === true ? tool.placeholder[0] : tool.placeholder[1]} />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Field
+                                            component={TextField}
+                                            variant='outlined'
+                                            fullWidth
+                                            className={classes.textField}
+                                            size='small' 
+                                            label='Relation Word'
+                                            helperText={`Ex. 'Temperature' yields results sorted by relevance to temperature.`}
+                                            name='relationWord' 
+                                            type='text' 
+                                            placeholder='Relation Word' />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Field
+                                            component={TextField}
+                                            variant='outlined'
+                                            fullWidth
+                                            className={classes.textField}
+                                            label='Number of Results'
+                                            size='small' 
+                                            name='numberOfResults' 
+                                            type='number' 
+                                            placeholder='100' />
+                                    </Grid>
+                                    <Button 
+                                        className={classes.actionButton}
+                                        color='primary' 
+                                        variant='contained' 
+                                        type='submit' 
+                                        onClick={submitForm} 
+                                        size='small'>
+                                        Submit
+                                    </Button>
+                                    </Grid>
                                 </Form>
                             )}
                         </Formik>
                     </Container>
                     </AccordionDetails>
                     </Accordion>
-                    <Accordion classes={{root: classes.expansionPanel, disabled: classes.disabled}} square expanded={state.expanded === 'panel2'} onChange={handlePanel('panel2')} disabled={state.expanded === 'panel2'}>
+                    <Accordion 
+                        classes={{root: classes.expansionPanel, disabled: classes.disabled}} 
+                        square 
+                        expanded={state.expanded === 'panel2'} 
+                        onChange={handlePanel('panel2')} 
+                        disabled={state.expanded === 'panel2'}>
                         <AccordionSummary classes={{root: classes.panelSummary, disabled: classes.disabled}}>
                             <Typography variant='h5'>Results</Typography>
                         </AccordionSummary>

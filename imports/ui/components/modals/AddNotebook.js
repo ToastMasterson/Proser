@@ -14,6 +14,7 @@ import Fade from '@material-ui/core/Fade'
 
 
 import { modalStyles } from '../../stylesheets/modal'
+import { Divider } from '@material-ui/core'
 
 const addNotebookSchema = Yup.object({
     title: Yup.string()
@@ -32,7 +33,7 @@ const AddNotebook = ({show, handleAlert, handleModalClose}) => {
     const handleAddNotebook = (values) => {
         event.preventDefault()
 
-        Meteor.call('notebooks.addNewNotebook', values, (error, response) => {
+        Meteor.call('notebooks.addNewNotebook', values, (error) => {
             if (error !== undefined) {
                 handleAlert(false, error.reason)
             } else {
@@ -52,7 +53,8 @@ const AddNotebook = ({show, handleAlert, handleModalClose}) => {
             className={classes.modal}>
             <Fade in={show}>
                 <div className={classes.modalPaper}>
-                    <Typography variant='h3'>Add a new notebook</Typography>
+                    <Typography variant='h4'>Add a new notebook</Typography>
+                    <Divider className={classes.divider} />
                     <Formik 
                         validationSchema={addNotebookSchema} 
                         onSubmit={values => handleAddNotebook(values)} 
@@ -65,10 +67,17 @@ const AddNotebook = ({show, handleAlert, handleModalClose}) => {
                                     name='title' 
                                     label='Title'
                                     type='text'
+                                    size='small'
                                     variant='outlined'
                                     fullWidth
                                     placeholder='New Notebook' />
-                                <Button type='submit'>Add Notebook</Button>
+                                <Button 
+                                    className={classes.actionButton} 
+                                    type='submit' 
+                                    variant='contained' 
+                                    color='primary'>
+                                    Add Notebook
+                                </Button>
                             </Form>
                         )}
                     </Formik>
