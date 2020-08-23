@@ -1,68 +1,44 @@
 import React, { useState } from 'react'
-import { Accounts } from 'meteor/accounts-base'
+import { Paper, Typography, Tabs, Tab } from '@material-ui/core'
 
-import Container from 'react-bootstrap/Container'
-import Alert from 'react-bootstrap/Alert'
-import Nav from 'react-bootstrap/Nav'
 import Signup from '../forms/Signup'
 import Login from '../forms/Login'
+import { landingStyles } from '../../stylesheets/landing'
 
-const Landing = () => {
+const Landing = ({ handleAlert }) => {
 
-    const [option, setOption] = useState(true)
-    const [error, setError] = useState('')
+    const [value, setValue] = useState(0)
+    
+    const classes = landingStyles()
 
-    const handleSwitch = () => {
-        setOption(!option)
-    }
-
-    const errorAlert = (error) => {
-        setError(error)
-    }
-
-    const handleClose = () => {
-        setError('')
+    const handleChange = (event, newValue) => {
+        setValue(newValue)
     }
 
     const checkOption = () => {
-        if (!option) {
-            return <Signup errorAlert={errorAlert} />
+        if (value === 1) {
+            return <Signup handleAlert={handleAlert} />
         }
 
-        return <Login errorAlert={errorAlert} />
-    }
-
-    const checkError = () => {
-        if (error !== '') {
-            return (
-                <Alert variant="danger" onClose={handleClose} dismissible>
-                    <Alert.Heading>Whoops!</Alert.Heading>
-                    <p>{error}</p>
-                </Alert>
-            )
-        }
+        return <Login handleAlert={handleAlert} />
     }
 
     return (
-        <Container>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-                <h1>Welcome to Proser!</h1>
-            </div>
-            <Container className="login">
-                <Nav justify variant="tabs">
-                    <Nav.Item>
-                        <Nav.Link disabled={option} onClick={handleSwitch}>Log In</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link disabled={!option} onClick={handleSwitch}>Sign Up</Nav.Link>
-                    </Nav.Item>
-                </Nav>
+        <div className={classes.landing}>
+            <Paper variant='outlined' className={classes.window}>
+                <Typography variant='h3' className={classes.title}> Welcome to Proser!</Typography>
+                <Tabs 
+                    value={value} 
+                    onChange={handleChange} 
+                    textColor='primary' 
+                    indicatorColor='secondary'
+                    centered >
+                    <Tab className={classes.tabs} label='Login' />
+                    <Tab className={classes.tabs} label='Sign up' />
+                </Tabs>
                 {checkOption()}
-            </Container>
-            <Container className="alert">
-                {checkError()}
-            </Container>
-        </Container>
+            </Paper>
+        </div>
     )
 }
 

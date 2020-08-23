@@ -11,9 +11,9 @@ const Title = ({initialTitle}) => {
 
     return (
         <ContentEditable
-            id="Title"
+            id='Title'
             html={title}
-            tagName="h1"
+            tagName='h1'
             style={{outline: '0px solid transparent'}} />
     )
 }

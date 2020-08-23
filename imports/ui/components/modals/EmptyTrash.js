@@ -8,7 +8,7 @@ import Fade from '@material-ui/core/Fade'
 
 import { modalStyles } from '../../stylesheets/modal'
 
-const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
+const EmptyTrash = ({show, handleModalClose, handleEmptyTrash}) => {
     const classes = modalStyles()
 
     return ( 
@@ -21,17 +21,17 @@ const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
             <Fade in={show}>
                 <div className={classes.modalPaper}>
                     <Typography variant='h5' gutterBottom>
-                        Confirm Deletion
+                        Empty Trash
                     </Typography>
                     <Typography variant='body1' gutterBottom>
-                        Once you delete this note it cannot be recovered.
+                        This will forever erase these notes.
                     </Typography>
                     <div className={classes.deleteButtons}>
                         <Button variant='contained' onClick={handleModalClose}>
                             Cancel
                         </Button>
-                        <Button variant='contained' style={{ backgroundColor: '#d32f2f' }} onClick={handleDelete}>
-                            Delete Note
+                        <Button variant='contained' style={{ backgroundColor: '#d32f2f' }} onClick={handleEmptyTrash}>
+                            Empty Trash
                         </Button>
                     </div>
                 </div>
@@ -40,4 +40,4 @@ const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
    )
 }
 
-export default ConfirmDelete
+export default EmptyTrash

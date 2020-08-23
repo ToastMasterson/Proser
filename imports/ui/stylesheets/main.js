@@ -7,7 +7,11 @@ export const mainStyles = makeStyles((theme) => ({
       display: 'flex',
     },
     Main: {
-      padding: 0
+      padding: 0,
+      height: '100vh',
+      backgroundImage: `url("https://www.photos-public-domain.com/wp-content/uploads/2012/05/ivory-off-white-paper-texture.jpg")`,
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
@@ -27,12 +31,17 @@ export const mainStyles = makeStyles((theme) => ({
     },
     drawerPaper: {
       width: drawerWidth,
+      background: '#eed7c391'
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
       [theme.breakpoints.up('md')]: {
           marginLeft: drawerWidth
-      }
+      },
+      height: '80%'
+    },
+    editor: {
+      height: '90%'
     }
 }))

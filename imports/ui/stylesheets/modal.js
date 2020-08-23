@@ -11,6 +11,8 @@ export const modalStyles = makeStyles((theme) => ({
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        minWidth: 350,
+        maxWidth: 700
       },
       toolForm: {
         [theme.breakpoints.up('md')]:{
@@ -42,9 +44,22 @@ export const modalStyles = makeStyles((theme) => ({
           margin: '12px 0',
         },
       },
+      radios: {
+        display: 'flex',
+        justifyContent: 'space-between'
+      },
       deleteButtons: {
         display: 'flex',
         justifyContent: 'space-between'
+      },
+      actionButton: {
+        float: 'right'
+      },
+      textField: {
+        marginBottom: 10
+      },
+      divider: {
+        marginBottom: 10
       },
       expanded: {},
       disabled: {}

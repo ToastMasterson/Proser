@@ -1,12 +1,18 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Meteor } from 'meteor/meteor'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import App from '../../ui/App'
 import Landing from '../../ui/components/Pages/Landing'
+import { render } from 'react-dom'
 
-export const renderRoutes = () => (
-    <Router>
-        <Route exact path="/" component={App} />
-        <Route path="landing" component={Landing} />
-    </Router>
-)
+Meteor.startup(() => {
+    render (
+        <Router>
+            <Switch>
+                <Route exact path='/' component={App} />
+                <Route path='landing' component={Landing} />
+            </Switch>
+        </Router>, 
+        document.getElementById('react-target'))
+})

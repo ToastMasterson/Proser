@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { withRouter } from 'react-router'
 import { Meteor } from 'meteor/meteor'
 
-import { Notes } from '../../api/notes/notePublications'
-import {accountContainer} from '../containers/accountContainer'
+import { Notes } from '../../api/notes/notes'
+
 import ConfirmDelete from './modals/ConfirmDelete'
 
 import Button from '@material-ui/core/Button'
@@ -15,7 +15,7 @@ import AccountCircleTwoToneIcon from '@material-ui/icons/AccountCircleTwoTone'
 
 import { appbarStyles } from '../stylesheets/appbar'
 
-const Navbar = accountContainer((props) => {
+const Navbar = (props) => {
     
     const classes = appbarStyles()
 
@@ -43,8 +43,9 @@ const Navbar = accountContainer((props) => {
     const handleSignout = () => {
         Meteor.logout(error => {
             if (error) {
-                console.log(error.reason)
+                props.handleAlert(false, error.reason)
             } else {
+                props.handleAlert(true, 'Signout Successful')
                 props.history.push('/')
             }
         })
@@ -101,28 +102,29 @@ const Navbar = accountContainer((props) => {
     const handleDelete = () => {
         Notes.remove({ _id: props.currentNote }, error => {
             if (error) {
-                console.log(error.reason)
+                props.handleAlert(false, error.reason)
             } else {
+                props.handleAlert(true, 'Note Deleted')
                 handleModalClose()
             }
         })
     }
     
     return (
-        <AppBar position="relative" className={classes.appbar}>
+        <AppBar position='sticky' className={classes.appbar}>
             <Toolbar>
                 <Hidden mdUp>
                     <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
+                        color='inherit'
+                        aria-label='open drawer'
+                        edge='start'
                         onClick={props.handleDrawerToggle}
                         className={classes.menuButton}>
                             <MenuIcon />
                     </IconButton>
                 </Hidden>
-                <Typography className={classes.title} variant="h6" noWrap> Proser </Typography>
-                <ButtonGroup variant="text" color="secondary">
+                <Typography className={classes.title} variant='h3' noWrap> Proser </Typography>
+                <ButtonGroup variant='text' color='secondary'>
                     <Button onClick={(event) => handleClick(event, 'file')}>
                         File
                     </Button>
@@ -132,7 +134,7 @@ const Navbar = accountContainer((props) => {
                     <Button onClick={(event) => handleClick(event, 'user')}>
                         <AccountCircleTwoToneIcon style={{marginRight: 5}} />
                         <Hidden smDown>
-                            {props.account.user.profile.firstName[0] + '. ' + props.account.user.profile.lastName}
+                            {props.user.profile.firstName[0] + '. ' + props.user.profile.lastName}
                         </Hidden>
                     </Button>
                 </ButtonGroup>
@@ -161,13 +163,13 @@ const Navbar = accountContainer((props) => {
                     keepMounted
                     open={state.button === 'user'}
                     onClose={handleMenuClose}>
-                    <MenuItem>Settings</MenuItem>
+                    <MenuItem disabled>Settings</MenuItem>
                     <MenuItem onClick={() => handleSelect('signout')}>Sign Out</MenuItem>
                 </DropDown>
                 <ConfirmDelete show={state.show} handleModalClose={handleModalClose} handleDelete={handleDelete} />
             </Toolbar>
         </AppBar>
     )
-})
+}
 
 export default withRouter(Navbar)

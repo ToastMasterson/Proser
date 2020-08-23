@@ -1,12 +1,12 @@
-import React from 'react'
-import { withRouter } from 'react-router'
-import { Accounts } from 'meteor/accounts-base'
-import { Formik } from 'formik'
+import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
+import { Meteor } from 'meteor/meteor'
 import * as Yup from 'yup'
 
-import Form from 'react-bootstrap/Form'
-import Button from 'react-bootstrap/Button'
-import Col from 'react-bootstrap/Col'
+import { Formik, Form, Field } from 'formik'
+import { Button, LinearProgress, Grid } from '@material-ui/core'
+import { TextField } from 'formik-material-ui'
+import { landingStyles } from '../../stylesheets/landing'
 
 const SignupSchema = Yup.object({
     firstName: Yup.string()
@@ -41,6 +41,10 @@ const SignupSchema = Yup.object({
 
 const Signup = (props) => {
 
+    const classes = landingStyles()
+
+    const [loading, setLoading] = useState(false)
+
     const initialValues = {
         firstName: '',
         lastName: '',
@@ -51,96 +55,114 @@ const Signup = (props) => {
 
     const handleSignUp = (values) => {
         event.preventDefault()
-        Accounts.createUser({
-            email: values.email,
-            password: values.password,
-            createdAt: new Date(),
-            profile: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                avatar: ''
-            }
-        }, error => {
-            if (error) {
-                props.errorAlert(error.reason)
+        Meteor.call('user.register', values, (error, result) => {
+            if (error !== undefined) {
+                props.handleAlert(false, error.reason)
+                setLoading(false)
             } else {
-                props.history.push('/')
+                Meteor.loginWithPassword({id: result}, values.password, (error) => {
+                    if (error !== undefined) {
+                        props.handleAlert(false, error.reason)
+                        setLoading(false)
+                    } else {
+                        props.handleAlert(true, 'Registration Successful')
+                        props.history.push('/')
+                    }
+                })
+                
             }
         })
     }
 
     return (
-        <Formik validationSchema={SignupSchema} onSubmit={values => handleSignUp(values)} initialValues={initialValues}>
-            {({ handleSubmit, handleChange, touched, errors, isValid, values }) => (
-                <Form noValidate onSubmit={handleSubmit}>
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="firstName">
-                            <Form.Label>First Name</Form.Label>
-                            <Form.Control 
-                                name="firstName" 
-                                type="text" 
-                                value={values.firstName}
-                                placeholder="John" 
-                                onChange={handleChange} 
-                                isValid={touched.firstName && !errors.firstName} />
-                            { errors.firstName && touched.firstName ? (<div className="formError">*** {errors.firstName} ***</div>) : null }
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="lastName">
-                            <Form.Label>Last Name</Form.Label>
-                            <Form.Control 
-                                name="lastName" 
-                                type="text" 
-                                value={values.lastName}
-                                placeholder="Snow" 
-                                onChange={handleChange}
-                                isValid={touched.lastName && !errors.lastName} />
-                            { errors.lastName && touched.lastName ? (<div className="formError">*** {errors.lastName} ***</div>) : null }
-                        </Form.Group>
-                    </Form.Row>
-                    <Form.Group controlId="email">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control 
-                            name="email" 
-                            type="email" 
-                            value={values.email}
-                            placeholder="Enter email" 
-                            onChange={handleChange} 
-                            isValid={touched.email && !errors.email} />
-                        { errors.email && touched.email ? (<div className="formError">*** {errors.email} ***</div>) : null }
-                        <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                        </Form.Text>
-                    </Form.Group>
-                    <Form.Row>
-                        <Form.Group as={Col} controlId="password">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control 
-                                name="password" 
-                                type="password" 
-                                value={values.password}
-                                placeholder="Password" 
-                                onChange={handleChange} 
-                                isValid={touched.password && !errors.password} />
-                            { errors.password && touched.password ? (<div className="formError">*** {errors.password} ***</div>) : null }
-                            <Form.Text className="text-muted">
-                                Password should be between 8 and 20 characters
-                            </Form.Text>
-                        </Form.Group>
-                        <Form.Group as={Col} controlId="confirmPassword">
-                            <Form.Label>Confirm Password</Form.Label>
-                            <Form.Control 
-                                name="confirmPassword" 
-                                type="password" 
-                                value={values.confirmPassword}
-                                placeholder="Re-enter Password" 
-                                onChange={handleChange} 
-                                isValid={touched.confirmPassword && !errors.confirmPassword} />
-                            { errors.confirmPassword && touched.confirmPassword ? (<div className="formError">*** {errors.confirmPassword} ***</div>) : null }
-                        </Form.Group>
-                    </Form.Row>
-                    <Button variant="primary" type="submit">
-                        Sign Up
-                    </Button>
+        <Formik 
+            validationSchema={SignupSchema} 
+            onSubmit={values => {
+                setLoading(true)
+                handleSignUp(values)
+            }} 
+            initialValues={initialValues}>
+            {({ submitForm }) => (
+                <Form className={classes.signup}>
+                    <Grid container justify='center'>
+                        <Grid item container spacing={2} justify='space-between'>
+                        <Grid item xs={6}>
+                            <Field
+                                component={TextField}
+                                className={classes.textField}
+                                name='firstName' 
+                                label='First Name'
+                                placeholder='John' 
+                                variant='outlined'
+                                size='small'
+                                fullWidth
+                                disabled={loading} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <Field
+                                component={TextField}
+                                className={classes.textField}
+                                name='lastName'
+                                label='Last Name'
+                                placeholder='Snow'
+                                variant='outlined'
+                                size='small'
+                                fullWidth
+                                disabled={loading} />
+                        </Grid>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Field
+                                component={TextField}
+                                className={classes.textField}
+                                name='email' 
+                                type='email' 
+                                label='Email'
+                                placeholder='handle@emailsite.com'
+                                variant='outlined'
+                                size='small'
+                                disabled={loading}
+                                fullWidth
+                                helperText={`We'll never share your email with anyone`} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Field
+                                component={TextField}
+                                className={classes.textField}
+                                name='password' 
+                                type='password' 
+                                placeholder='Password'
+                                variant='outlined'
+                                size='small'
+                                disabled={loading}
+                                fullWidth
+                                helperText='Must be between 8 and 20 characters' />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Field
+                                component={TextField}
+                                className={classes.textField}
+                                name='confirmPassword' 
+                                type='password' 
+                                placeholder='Re-enter Password'
+                                variant='outlined'
+                                size='small'
+                                disabled={loading}
+                                fullWidth
+                                helperText='Passwords must match' />
+                        </Grid>
+                        { loading && <LinearProgress /> }
+                        <Button
+                            className={classes.submitButton}
+                            variant='contained'
+                            color='primary'
+                            size='large'
+                            type='submit'
+                            disabled={loading}
+                            onClick={submitForm}>
+                            Sign up
+                        </Button>
+                    </Grid>
                 </Form>
             )}
         </Formik>

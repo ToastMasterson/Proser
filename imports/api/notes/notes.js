@@ -1,38 +1,41 @@
 import { Mongo } from 'meteor/mongo'
-import { Meteor } from 'meteor/meteor'
 import SimpleSchema from 'simpl-schema'
 
 export const Notes = new Mongo.Collection('notes')
 
-if (Meteor.isServer) {
-    Meteor.publish('notes', function notesPublication() {
-        return Notes.find()
-    })
-}
-
 const NotesSchema = new SimpleSchema({
+
     title: {
         type: String,
-        label: "Title"
+        label: 'Title'
     },
     content: {
         type: String,
-        label: "Content"
+        label: 'Content'
     },
     author: {
         type: String,
-        label: "Author",
+        label: 'Author',
         autoValue: function() {
             return this.userId
         }
     },
+    notebookId: {
+        type: String,
+        label: 'Notebook',
+        optional: true
+    },
+    isDeleted: {
+        type: Boolean,
+        label: 'Deleted ?'
+    },
     createdAt: {
         type: Date,
-        label: "Created At"
+        label: 'Created At'
     },
     updatedAt: {
         type: Date,
-        label: "Updated At",
+        label: 'Updated At',
         autoValue: function() {
             return new Date()
         }

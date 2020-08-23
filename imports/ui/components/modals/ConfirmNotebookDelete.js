@@ -8,7 +8,7 @@ import Fade from '@material-ui/core/Fade'
 
 import { modalStyles } from '../../stylesheets/modal'
 
-const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
+const ConfirmNotebookDelete = ({show, handleModalClose, notebookId, handleDeleteNotebook}) => {
     const classes = modalStyles()
 
     return ( 
@@ -30,7 +30,7 @@ const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
                         <Button variant='contained' onClick={handleModalClose}>
                             Cancel
                         </Button>
-                        <Button variant='contained' style={{ backgroundColor: '#d32f2f' }} onClick={handleDelete}>
+                        <Button variant='contained' style={{ backgroundColor: '#d32f2f' }} onClick={() => handleDeleteNotebook(notebookId)}>
                             Delete Note
                         </Button>
                     </div>
@@ -40,4 +40,4 @@ const ConfirmDelete = ({show, handleModalClose, handleDelete}) => {
    )
 }
 
-export default ConfirmDelete
+export default ConfirmNotebookDelete

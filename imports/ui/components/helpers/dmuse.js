@@ -1,7 +1,5 @@
 export const DMuse = async (payload, queryType) => {
 
-    console.log(payload)
-
     const wordsEndpoint = 'https://api.datamuse.com/words'
 
     const rhymeAPI = async () => {
@@ -11,10 +9,8 @@ export const DMuse = async (payload, queryType) => {
 
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
-            .catch(error => console.log(error))
+            .catch(error => console.log('DMuse.rhymeAPI: Error', error))
 
-
-        console.log(queryString, results)
         return results
     }
 
@@ -26,7 +22,7 @@ export const DMuse = async (payload, queryType) => {
     
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
-            .catch(error => console.log(error))
+            .catch(error => console.log('DMuse.adjAPI: Error', error))
 
         return results
     }
@@ -39,7 +35,7 @@ export const DMuse = async (payload, queryType) => {
     
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
-            .catch(error => console.log(error))
+            .catch(error => console.log('DMuse.finderAPI: Error', error))
 
         return results
     }
@@ -52,7 +48,7 @@ export const DMuse = async (payload, queryType) => {
     
         const results = await fetch(wordsEndpoint + queryString)
             .then(res => res.json())
-            .catch(error => console.log(error))
+            .catch(error => console.log('DMuse.synAPI: Error', error))
 
         return results
     }
@@ -69,6 +65,4 @@ export const DMuse = async (payload, queryType) => {
         default:
             break
     }
-
-    
 }
